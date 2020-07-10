@@ -3,7 +3,7 @@ import axios from 'axios';
 import {Provider, connect} from 'react-redux';
 import {createStore, combineReducers} from 'redux';
 import * as React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, Text, Button, StyleSheet, Alert} from 'react-native';
 
 class LoginScreen extends React.Component {
   constructor(props) {
@@ -35,7 +35,7 @@ class LoginScreen extends React.Component {
         <Text style={styles.paragraph}>
           {this.props.authState
             ? 'Welcome to Dashboard!!!!'
-            : 'Let login before!'}
+            : 'Let`s to login before!'}
         </Text>
         <Button
           title="LOGIN"
@@ -58,9 +58,13 @@ class LoginScreen extends React.Component {
         <Button
           title="Go to Dashboard screen"
           onPress={() => {
-            this.props.navigation.navigate('Dashboard', {
-              authState: this.props.authState,
-            });
+            if (this.props.authState) {
+              this.props.navigation.navigate('Dashboard', {
+                authState: this.props.authState,
+              });
+            } else {
+              Alert.alert('Let`s to login before!');
+            }
           }}
         />
       </View>

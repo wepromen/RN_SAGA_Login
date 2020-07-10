@@ -5,20 +5,25 @@ import {createStore, combineReducers} from 'redux';
 import * as React from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
 
-function DashboardScreen({route, dispatch, navigation}) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.paragraph}>
-        {route.params.authState
-          ? 'Welcome to Dashboard!!!!'
-          : 'Let login before!'}
-      </Text>
-      <Button
-        title="Go to Login screen"
-        onPress={() => navigation.navigate('Login')}
-      />
-    </View>
-  );
+class DashboardScreen extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.paragraph}>
+          {this.props.route.params.authState
+            ? 'Welcome to Dashboard!!!!'
+            : 'Let login before!'}
+        </Text>
+        <Button
+          title="Go to Login screen"
+          onPress={() => this.props.navigation.navigate('Login')}
+        />
+      </View>
+    );
+  }
 }
 const styles = StyleSheet.create({
   container: {

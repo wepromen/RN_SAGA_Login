@@ -1,16 +1,16 @@
 import * as React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
-import {Provider, connect} from 'react-redux';
+// import {View, Text, Button, StyleSheet} from 'react-native';
+import {Provider} from 'react-redux';
 import {createStore, applyMiddleware, combineReducers} from 'redux';
 // import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
+// import AsyncStorage from '@react-native-community/async-storage';
+// import axios from 'axios';
 import authReducer from './Reducers';
 import LoginScreen from './LoginScreen';
-import DashboardScreen from './Dashboard';
+import DashboardScreen from './DashboardScreen';
 import rootSaga from './apiSaga';
 
 // create the saga middleware

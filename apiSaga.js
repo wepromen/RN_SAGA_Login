@@ -7,7 +7,7 @@ function* apiSideEffect(action) {
     // 1. call Api
     console.log('- 1. Saga: PRESSBTNLOGIN');
     const apiData = yield call(() =>
-      axios.post('http://192.168.1.10:3000/login', {
+      axios.post('http://192.168.1.13:3000/login', {
         email: 'admin',
         password: 'admin',
       }),
