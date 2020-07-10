@@ -17,7 +17,7 @@ class LoginScreen extends React.Component {
           '===LoginScreen  Init screen - Get token in Async: ' + token,
         );
         if (typeof token !== 'undefined' && token != null) {
-          this.props.dispatch({type: 'PRESSBTNLOGIN'});
+          this.props.dispatch({type: 'LOGIN'});
         } else {
           this.props.dispatch({type: 'PRESSBTNLOGOUT'});
         }

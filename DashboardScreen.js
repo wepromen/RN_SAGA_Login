@@ -7,17 +7,27 @@ import {
   Text,
   StatusBar,
   Component,
+  TouchableOpacity,
+  Alert
 } from 'react-native';
+import DataFile from './DataFile';
 
 export class AItem extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  onPressAItem(item) {
+    Alert.alert(item.title);
+  }
+
   render() {
     return (
       <View style={styles.item}>
-        <Text style={styles.title}>{this.props.items.title}</Text>
-        <Text>{this.props.items.content}</Text>
+        <TouchableOpacity onPress={() => this.onPressAItem(this.props.items)}>
+          <Text style={styles.title}>{this.props.items.title}</Text>
+          <Text>{this.props.items.content}</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -26,30 +36,14 @@ export class AItem extends React.Component {
 export default class DashboardScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {};
   }
 
   render() {
-    let DATA = [
-      {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        title: 'First Item',
-        content: 'Content item',
-      },
-      {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        title: 'Second Item',
-        content: 'Content item',
-      },
-      {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        title: 'Third Item',
-        content: 'Content item',
-      },
-    ];
     return (
       <View style={styles.container}>
         <FlatList
-          data={DATA}
+          data={DataFile}
           renderItem={({item, index}) => <AItem items={item} index={index} />}
           keyExtractor={(item) => item.id}
         />
@@ -64,12 +58,12 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
   },
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: 'gray', // this.props.index % 2 === 0 ? 'green' : 'gray'
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
   },
   title: {
-    fontSize: 32,
+    fontSize: 18,
   },
 });
