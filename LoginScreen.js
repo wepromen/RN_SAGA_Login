@@ -54,7 +54,7 @@ class LoginScreen extends React.Component {
         />
 
         <Button
-          title="Go to Dashboard screen"
+          title="Go to All Produces screen"
           onPress={() => {
             if (this.props.isLogged) {
               this.props.navigation.navigate('Dashboard', {
@@ -67,7 +67,20 @@ class LoginScreen extends React.Component {
         />
         <Button
           title="Go to Cart"
-          onPress={() => this.props.navigation.navigate('Cart')}
+          onPress={() =>
+            // this.props.navigation.navigate('Cart', {
+            //   isLogged: this.props.isLogged,
+            // })
+            {
+              if (this.props.isLogged) {
+                this.props.navigation.navigate('Cart', {
+                  isLogged: this.props.isLogged,
+                });
+              } else {
+                Alert.alert('Let`s to login before!');
+              }
+            }
+          }
         />
       </View>
     );
