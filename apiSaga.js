@@ -1,13 +1,13 @@
-import {call, put, takeLatest, all} from 'redux-saga/effects';
+import {call, put, takeEvery} from 'redux-saga/effects';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
-function* apiSideEffect(action) {
+function* loginSideEffect(action) {
   try {
     // 1. call Api
     console.log('- 1. Saga: PRESSBTNLOGIN');
     const apiData = yield call(() =>
-      axios.post('http://192.168.1.17:3000/login', {
+      axios.post('http://192.168.1.19:3000/login', {
         email: 'admin',
         password: 'admin',
       }),
@@ -34,15 +34,8 @@ function* logoutSideEffect(action) {
   }
 }
 
-// the 'watcher' - on every 'API_BUTTON_CLICK' action, run our side effect
-// export function* apiSaga() {
-//   yield takeEvery('PRESSBTNLOGIN', apiSideEffect);
-// }
-
-function* apiSaga() {
-  yield takeLatest('PRESSBTNLOGIN', apiSideEffect);
-  yield takeLatest('PRESSBTNLOGOUT', logoutSideEffect);
-}
+// the 'watcher' - on every a action, run our side effect
 export default function* rootSaga() {
-  yield all([apiSaga(), apiSideEffect()]);
+  yield takeEvery('PRESSBTNLOGIN', loginSideEffect);
+  yield takeEvery('PRESSBTNLOGOUT', logoutSideEffect);
 }
