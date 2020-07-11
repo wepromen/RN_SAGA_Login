@@ -1,6 +1,5 @@
-import AsyncStorage from '@react-native-community/async-storage';
-
-export default function authReducer(state, action) {
+const INITIAL_STATE = [{isLogged: false}];
+export default function authReducer(state = INITIAL_STATE, action) {
   if (typeof state === 'undefined') {
     return false;
   }
@@ -8,17 +7,17 @@ export default function authReducer(state, action) {
   switch (action.type) {
     case 'PRESSBTNLOGOUT':
       console.log('Reducer Action is PRESSBTNLOGOUT');
-      return false;
+      return [...state, {isLogged: false}];
     case 'PRESSBTNLOGIN':
       console.log('Reducer Action is PRESSBTNLOGIN');
-      return false;
+      return [...state, {isLogged: false}];
     case 'LOGIN':
       console.log('Reducer Action is LOGIN');
-      return true;
+      return [...state, {isLogged: true}];
     case 'LOGOUT':
       console.log('Reducer Action is LOGOUT');
-      return false;
+      return [...state, {isLogged: false}];
     default:
-      return false;
+      return [...state, {isLogged: false}];
   }
 }

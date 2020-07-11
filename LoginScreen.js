@@ -14,12 +14,10 @@ class LoginScreen extends React.Component {
     AsyncStorage.getItem('token')
       .then((token) => {
         console.log(
-          '===LoginScreen  Init screen - Get token in Async: ' + token,
+          '===LoginScreen  Mount screen check token in Async: ' + token,
         );
         if (typeof token !== 'undefined' && token != null) {
           this.props.dispatch({type: 'LOGIN'});
-        } else {
-          this.props.dispatch({type: 'PRESSBTNLOGOUT'});
         }
       })
       .catch((err) => {
@@ -28,12 +26,12 @@ class LoginScreen extends React.Component {
       });
   }
 
-  // authState before is app state
+  // isLogged before is app state
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.paragraph}>
-          {this.props.authState
+          {this.props.isLogged
             ? 'Welcome to Dashboard!!!!'
             : 'Let`s to login before!'}
         </Text>
@@ -58,14 +56,18 @@ class LoginScreen extends React.Component {
         <Button
           title="Go to Dashboard screen"
           onPress={() => {
-            if (this.props.authState) {
+            if (this.props.isLogged) {
               this.props.navigation.navigate('Dashboard', {
-                authState: this.props.authState,
+                isLogged: this.props.isLogged,
               });
             } else {
               Alert.alert('Let`s to login before!');
             }
           }}
+        />
+        <Button
+          title="Go to Cart"
+          onPress={() => this.props.navigation.navigate('Cart')}
         />
       </View>
     );
@@ -87,10 +89,10 @@ const styles = StyleSheet.create({
   },
 });
 
-/* Connect the LoginScreen to Redux| It's will store authState of Redux Store to authState
+/* Connect the LoginScreen to Redux| It's will store isLogged of Redux Store to isLogged
   and then its can use this where is LoginScreen
 */
-// let LoginContainer = connect((state) => ({authState: state.authState}))(
+// let LoginContainer = connect((state) => ({isLogged: state.isLogged}))(
 //   LoginScreen,
 // );
 
@@ -98,7 +100,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    authState: state.authState,
+    isLogged: state.isLogged,
   };
 };
 

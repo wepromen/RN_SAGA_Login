@@ -5,7 +5,7 @@ import {createStore, combineReducers} from 'redux';
 import * as React from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
 
-function LoginScreen({authState, dispatch, navigation}) {
+function LoginScreen({isLogged, dispatch, navigation}) {
   console.log('0. Start LoginScreen');
 
   AsyncStorage.getItem('token')
@@ -22,11 +22,11 @@ function LoginScreen({authState, dispatch, navigation}) {
       console.log(err);
     });
 
-  // authState before is app state
+  // isLogged before is app state
   return (
     <View style={styles.container}>
       <Text style={styles.paragraph}>
-        {authState ? 'Welcome to Dashboard!!!!' : 'Let login before!'}
+        {isLogged ? 'Welcome to Dashboard!!!!' : 'Let login before!'}
       </Text>
       <Button
         title="LOGIN"
@@ -50,7 +50,7 @@ function LoginScreen({authState, dispatch, navigation}) {
         title="Go to Dashboard screen"
         onPress={() =>
           navigation.navigate('Dashboard', {
-            authState,
+            isLogged,
           })
         }
       />
@@ -73,10 +73,10 @@ const styles = StyleSheet.create({
   },
 });
 
-/* Connect the LoginScreen to Redux| It's will store authState of Redux Store to authState
+/* Connect the LoginScreen to Redux| It's will store isLogged of Redux Store to isLogged
   and then its can use this where is LoginScreen
 */
-// let LoginContainer = connect((state) => ({authState: state.authState}))(
+// let LoginContainer = connect((state) => ({isLogged: state.isLogged}))(
 //   LoginScreen,
 // );
 
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    authState: state.authState,
+    isLogged: state.isLogged,
   };
 };
 

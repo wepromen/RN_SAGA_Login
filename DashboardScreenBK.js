@@ -13,7 +13,7 @@ class DashboardScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.paragraph}>
-          {this.props.route.params.authState
+          {this.props.route.params.isLogged
             ? 'Welcome to Dashboard!!!!'
             : 'Let login before!'}
         </Text>
@@ -42,14 +42,14 @@ const styles = StyleSheet.create({
 });
 
 // // Connect the screens to Redux
-// let DashboardContainer = connect((state) => ({authState: state.authState}))(
+// let DashboardContainer = connect((state) => ({isLogged: state.isLogged}))(
 //   DashboardScreen,
 // );
 
 // export default DashboardContainer;
 const mapStateToProps = (state) => {
   return {
-    authState: state.authState,
+    isLogged: state.isLogged,
   };
 };
 

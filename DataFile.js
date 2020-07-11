@@ -1,33 +1,33 @@
 var DataFile = [
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-    content: 'Content item',
+    id: 1,
+    name: 'Fifa 19',
+    price: 49.99,
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-    content: 'Content item',
+    id: 2,
+    name: 'Amazon Echo',
+    price: 199,
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-    content: 'Content item',
+    id: 3,
+    name: 'Bose QC 35 Headphones',
+    price: 300,
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d73',
-    title: '4 Item',
-    content: 'Content item',
+    id: 4,
+    name: 'How to Kill a Mocking Bird',
+    price: 10,
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d74',
-    title: '5 Item',
-    content: 'Content item',
+    id: 5,
+    name: 'War of Art',
+    price: 7,
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d75',
-    title: '6 Item',
-    content: 'Content item',
+    id: 6,
+    name: 'Relentless',
+    price: 5.99,
   },
 ];
 module.exports = DataFile;

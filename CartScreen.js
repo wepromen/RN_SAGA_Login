@@ -1,18 +1,23 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-
-import DataFile from './DataFile';
 import Products from './Products';
 import {connect} from 'react-redux';
 
-class DashboardScreen extends Component {
+class CartScreen extends Component {
   constructor(props) {
     super(props);
   }
   render() {
     return (
       <View style={styles.container}>
-        <Products products={DataFile} onPress={this.props.addItemToCart} />
+        {this.props.cartItems.length > 0 ? (
+          <Products
+            onPress={this.props.removeItem}
+            products={this.props.cartItems}
+          />
+        ) : (
+          <Text>No items in your cart</Text>
+        )}
       </View>
     );
   }
@@ -20,18 +25,19 @@ class DashboardScreen extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isLogged: true,
+    // isLogged: true,
     cartItems: state.cartItems,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addItemToCart: (product) =>
-      dispatch({type: 'ADD_TO_CART', payload: product}),
+    removeItem: (product) =>
+      dispatch({type: 'REMOVE_FROM_CART', payload: product}),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardScreen);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartScreen);
 
 const styles = StyleSheet.create({
   container: {

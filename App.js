@@ -8,23 +8,23 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 // import AsyncStorage from '@react-native-community/async-storage';
 // import axios from 'axios';
-import authReducer from './Reducers';
+import AuthReducer from './AuthReducer';
+import CartReducer from './CartReducer';
 import LoginScreen from './LoginScreen';
 import DashboardScreen from './DashboardScreen';
+import CartScreen from './CartScreen';
+
 import rootSaga from './apiSaga';
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
-// mount it on the Store
-// const store = createStore(
-//   reducer,
-//   applyMiddleware(sagaMiddleware)
-// )
-
-// A very simple store (***authReducer will handle to authState State)
+// A very simple store (***authReducer will handle to isLogged State)
 let store = createStore(
-  combineReducers({authState: authReducer}),
+  combineReducers({
+    isLogged: AuthReducer,
+    cartItems: CartReducer,
+  }),
   applyMiddleware(sagaMiddleware),
 );
 
@@ -42,11 +42,12 @@ export default function App() {
             name="Dashboard"
             component={DashboardScreen}
             options={({route}) => ({
-              title: route.params.authState
+              title: route.params.isLogged
                 ? 'Welcome to Dashboard!!!!'
                 : 'Let login before!',
             })}
           />
+          <RootStack.Screen name="Cart" component={CartScreen} />
         </RootStack.Navigator>
       </NavigationContainer>
     </Provider>
