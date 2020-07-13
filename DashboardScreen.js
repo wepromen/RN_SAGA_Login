@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import DataFile from './DataFile';
 import Products from './Products';
 import {connect} from 'react-redux';
@@ -9,10 +9,36 @@ class DashboardScreen extends Component {
   constructor(props) {
     super(props);
   }
+
+  onClickAddCart(data) {
+    const itemcart = {
+      food: data,
+      quantity: 1,
+      price: data.price,
+    };
+
+    AsyncStorage.getItem('cart')
+      .then((datacart) => {
+        if (datacart !== null) {
+          // We have data!!
+          const cart = JSON.parse(datacart);
+          cart.push(itemcart);
+          AsyncStorage.setItem('cart', JSON.stringify(cart));
+        } else {
+          const cart = [];
+          cart.push(itemcart);
+          AsyncStorage.setItem('cart', JSON.stringify(cart));
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Products products={DataFile} onPress={this.props.addItemToCart} />
+        <Products products={DataFile} onPress={this.onClickAddCart} />
       </View>
     );
   }

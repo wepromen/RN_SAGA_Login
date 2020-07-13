@@ -36,7 +36,7 @@ class Products extends Component {
         <FlatList
           data={this.props.products}
           renderItem={renderItem}
-          // keyExtractor={(item) => item.id}
+          // keyExtractor={(item) => item.food.id}
         />
       </View>
     );
@@ -57,11 +57,10 @@ const styles = StyleSheet.create({
     // marginTop: StatusBar.currentHeight || 0,
   },
   item: {
-    justifyContent: 'center',
     flex: 1,
     flexDirection: 'row',
     paddingHorizontal: 5,
-    backgroundColor: 'powderblue',
+    backgroundColor: '#33c37d',
     marginTop: 20,
   },
   title: {
@@ -73,7 +72,7 @@ const styles = StyleSheet.create({
     padding: 5,
     marginRight: 5,
     textAlign: 'right',
-    backgroundColor: 'gray',
+    backgroundColor: '#33c37d',
     // justifyContent: 'center',
     fontSize: 18,
   },
