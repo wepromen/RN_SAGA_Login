@@ -1,32 +1,32 @@
 var DataFile = [
   {
     id: 1,
-    name: 'Fifa 19',
+    name: 'Girl 1',
     price: 49.99,
   },
   {
     id: 2,
-    name: 'Amazon Echo',
+    name: 'Girl 2',
     price: 199,
   },
   {
     id: 3,
-    name: 'Bose QC 35 Headphones',
+    name: 'Girl 3',
     price: 300,
   },
   {
     id: 4,
-    name: 'How to Kill a Mocking Bird',
+    name: 'Girl 4',
     price: 10,
   },
   {
     id: 5,
-    name: 'War of Art',
-    price: 7,
+    name: '3D',
+    price: 0,
   },
   {
     id: 6,
-    name: 'Relentless',
+    name: 'Girl 6',
     price: 5.99,
   },
 ];

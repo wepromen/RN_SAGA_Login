@@ -23,7 +23,7 @@
     "react-native-screens": "^2.9.0",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
-    "redux-saga": "^1.1.3"
+    "redux-saga": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Products from './Products';
 import {connect} from 'react-redux';
 
@@ -14,6 +14,7 @@ class CartScreen extends Component {
           <Products
             onPress={this.props.removeItem}
             products={this.props.cartItems}
+            propsAction="Remove"
           />
         ) : (
           <Text>No items in your cart</Text>
@@ -25,7 +26,7 @@ class CartScreen extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    // isLogged: true,
+    isLogged: true,
     cartItems: state.cartItems,
   };
 };
