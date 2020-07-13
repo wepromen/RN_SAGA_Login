@@ -12,7 +12,7 @@ class DashboardScreen extends Component {
 
   onClickAddCart(data) {
     const itemcart = {
-      food: data,
+      girl: data,
       quantity: 1,
       price: data.price,
     };
@@ -37,7 +37,7 @@ class DashboardScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Products products={DataFile} onPress={this.onClickAddCart} />
       </View>
     );
@@ -59,10 +59,10 @@ const mapDispatchToProps = (dispatch) => {
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardScreen);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+// });

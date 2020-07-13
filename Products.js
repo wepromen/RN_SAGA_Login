@@ -1,29 +1,74 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
   View,
+  Image,
   Text,
   StyleSheet,
+  Dimensions,
   TouchableOpacity,
   FlatList,
   StatusBar,
 } from 'react-native';
 import {connect} from 'react-redux';
 
+var {width} = Dimensions.get('window');
+
 class Products extends Component {
   render() {
     const Item = ({item, name, price}) => (
-      <View style={styles.item}>
-        <View style={{width: 240, height: 70}}>
-          <Text style={styles.title}>
-            {name} - {price} $
-          </Text>
-        </View>
-        <View style={{width: 80, height: 70}}>
-          <TouchableOpacity onPress={() => this.props.onPress(item)}>
-            <Text style={styles.btn}>
-              {this.props.propsAction === 'Remove' ? 'Remove' : 'Add'}
+      <View
+        style={{
+          width: width - 20,
+          margin: 10,
+          backgroundColor: 'transparent',
+          flexDirection: 'row',
+          borderBottomWidth: 2,
+          borderColor: '#cccccc',
+          paddingBottom: 10,
+        }}>
+        <Image
+          resizeMode={'contain'}
+          style={{width: width / 3, height: width / 3}}
+          source={{uri: item.image}}
+        />
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'trangraysparent',
+            padding: 10,
+            justifyContent: 'space-between',
+          }}>
+          <View>
+            <Text style={{fontWeight: 'bold', fontSize: 20}}>{name}</Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#33c37d',
+                fontSize: 20,
+              }}>
+              $ {price}
             </Text>
-          </TouchableOpacity>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <TouchableOpacity onPress={() => this.props.onPress(item)}>
+                <Text
+                  style={{
+                    color: '#33c37d',
+                    paddingHorizontal: 8,
+                    fontWeight: 'bold',
+                    fontSize: 50,
+                  }}>
+                  +
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </View>
     );
@@ -32,7 +77,7 @@ class Products extends Component {
       <Item item={item} name={item.name} price={item.price} />
     );
     return (
-      <View style={styles.container}>
+      <View style={{flex: 1}}>
         <FlatList
           data={this.props.products}
           renderItem={renderItem}
@@ -50,30 +95,3 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, null)(Products);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // marginTop: StatusBar.currentHeight || 0,
-  },
-  item: {
-    flex: 1,
-    flexDirection: 'row',
-    paddingHorizontal: 5,
-    backgroundColor: '#33c37d',
-    marginTop: 20,
-  },
-  title: {
-    // paddingHorizontal: 10,
-    // justifyContent: 'center',
-    fontSize: 35,
-  },
-  btn: {
-    padding: 5,
-    marginRight: 5,
-    textAlign: 'right',
-    backgroundColor: '#33c37d',
-    // justifyContent: 'center',
-    fontSize: 18,
-  },
-});

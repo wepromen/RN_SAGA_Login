@@ -11,9 +11,10 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-var {width} = Dimensions.get('window');
 import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
+
+var {width} = Dimensions.get('window');
 var totalPrice = 0;
 
 class CartScreen extends Component {
@@ -39,10 +40,6 @@ class CartScreen extends Component {
         alert(err);
       });
   }
-
-  // componentDidUpdate() {
-  //   this.setState = {totalPrice: totalPrice};
-  // }
 
   onChangeQual(i, type) {
     const dataCar = this.state.dataCart;
@@ -84,23 +81,23 @@ class CartScreen extends Component {
                     borderColor: '#cccccc',
                     paddingBottom: 10,
                   }}>
-                  {/* <Image
+                  <Image
                     resizeMode={'contain'}
                     style={{width: width / 3, height: width / 3}}
-                    source={{uri: item.food.image}}
-                  /> */}
+                    source={{uri: item.girl.image}}
+                  />
                   <View
                     style={{
                       flex: 1,
-                      backgroundColor: 'trangraysparent',
+                      backgroundColor: 'transparent',
                       padding: 10,
                       justifyContent: 'space-between',
                     }}>
                     <View>
                       <Text style={{fontWeight: 'bold', fontSize: 20}}>
-                        {item.food.name}
+                        {item.girl.name}
                       </Text>
-                      <Text>Content.....</Text>
+                      {/* <Text>Content.....</Text> */}
                     </View>
                     <View
                       style={{
@@ -174,7 +171,7 @@ class CartScreen extends Component {
 
             <TouchableOpacity
               onPress={() => {
-                Alert.alert('Total: ' + this.state.totalPrice);
+                Alert.alert('Total: ' + totalPrice);
               }}
               style={{
                 backgroundColor: '#33c37d',

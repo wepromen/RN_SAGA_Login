@@ -54,7 +54,7 @@ class LoginScreen extends React.Component {
         />
 
         <Button
-          title="Go to All Produces screen"
+          title="Go to All Products screen"
           onPress={() => {
             if (this.props.isLogged) {
               this.props.navigation.navigate('Dashboard', {
@@ -99,6 +99,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  btn: {
+    color: '#33c37d',
+    paddingHorizontal: 8,
+    fontWeight: 'bold',
+    fontSize: 50,
   },
 });
 
