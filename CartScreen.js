@@ -79,25 +79,26 @@ class CartScreen extends Component {
                     flexDirection: 'row',
                     borderBottomWidth: 2,
                     borderColor: '#cccccc',
-                    paddingBottom: 10,
+                    paddingBottom: 5,
                   }}>
                   <Image
                     resizeMode={'contain'}
-                    style={{width: width / 3, height: width / 3}}
+                    style={{width: width / 3, height: width / 3.8}}
                     source={{uri: item.girl.image}}
                   />
                   <View
                     style={{
                       flex: 1,
                       backgroundColor: 'transparent',
-                      padding: 10,
+                      paddingTop: 10,
+                      paddingLeft: 10,
+
                       justifyContent: 'space-between',
                     }}>
                     <View>
                       <Text style={{fontWeight: 'bold', fontSize: 20}}>
                         {item.girl.name}
                       </Text>
-                      {/* <Text>Content.....</Text> */}
                     </View>
                     <View
                       style={{
@@ -110,7 +111,7 @@ class CartScreen extends Component {
                           color: '#33c37d',
                           fontSize: 20,
                         }}>
-                        ${item.price * item.quantity}
+                        $ {item.price * item.quantity}
                       </Text>
                       <View
                         style={{flexDirection: 'row', alignItems: 'center'}}>

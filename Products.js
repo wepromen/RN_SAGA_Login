@@ -8,7 +8,6 @@ import {
   Dimensions,
   TouchableOpacity,
   FlatList,
-  StatusBar,
 } from 'react-native';
 import {connect} from 'react-redux';
 
@@ -27,49 +26,59 @@ class Products extends Component {
           borderColor: '#cccccc',
           paddingBottom: 10,
         }}>
-        <Image
-          resizeMode={'contain'}
-          style={{width: width / 3, height: width / 3}}
-          source={{uri: item.image}}
-        />
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'trangraysparent',
-            padding: 10,
-            justifyContent: 'space-between',
-          }}>
-          <View>
-            <Text style={{fontWeight: 'bold', fontSize: 20}}>{name}</Text>
-          </View>
+        <TouchableOpacity onPress={() => this.props.onPress(item)}>
           <View
             style={{
+              flex: 1,
               flexDirection: 'row',
               justifyContent: 'space-between',
+              // alignItems: 'center',
+              backgroundColor: 'trangraysparent',
+              padding: 10,
             }}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: '#33c37d',
-                fontSize: 20,
-              }}>
-              $ {price}
-            </Text>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <TouchableOpacity onPress={() => this.props.onPress(item)}>
+            <Image
+              resizeMode={'contain'}
+              style={{width: width / 3, height: width / 3.8}}
+              source={{uri: item.image}}
+            />
+            <View>
+              <View
+                style={{
+                  width: width / 3,
+                  // height: width / 4,
+                  padding: 10,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <Text
+                  style={{fontWeight: 'bold', fontSize: 20, width: width / 3}}>
+                  {name}
+                </Text>
                 <Text
                   style={{
-                    color: '#33c37d',
-                    paddingHorizontal: 8,
                     fontWeight: 'bold',
-                    fontSize: 50,
+                    color: '#33c37d',
+                    fontSize: 20,
+                    // alignItems: 'center',
                   }}>
-                  +
+                  $ {price}
                 </Text>
-              </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'column',
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                  width: width / 1.7,
+                  height: width / 8,
+                }}>
+                <Text>
+                  This is content of product aaaaa aaaaaa aaaaaaa aaaa
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
     );
 
@@ -81,7 +90,7 @@ class Products extends Component {
         <FlatList
           data={this.props.products}
           renderItem={renderItem}
-          // keyExtractor={(item) => item.food.id}
+          // keyExtractor={(item) => item.id}
         />
       </View>
     );
