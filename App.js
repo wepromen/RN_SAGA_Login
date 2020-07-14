@@ -1,19 +1,15 @@
 import * as React from 'react';
-// import {View, Text, Button, StyleSheet} from 'react-native';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware, combineReducers} from 'redux';
-// import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-// import AsyncStorage from '@react-native-community/async-storage';
-// import axios from 'axios';
 import AuthReducer from './AuthReducer';
 import CartReducer from './CartReducer';
 import LoginScreen from './LoginScreen';
-import DashboardScreen from './DashboardScreen';
+import AllProductsScreen from './AllProductsScreen';
 import CartScreen from './CartScreen';
-
+import DetailProductScreen from './DetailProductScreen';
 import rootSaga from './apiSaga';
 
 // create the saga middleware
@@ -39,15 +35,23 @@ export default function App() {
         <RootStack.Navigator>
           <RootStack.Screen name="Login" component={LoginScreen} />
           <RootStack.Screen
-            name="Dashboard"
-            component={DashboardScreen}
+            name="AllProducts"
+            component={AllProductsScreen}
             options={({route}) => ({
               title: route.params.isLogged
-                ? 'Welcome to Dashboard!!!!'
+                ? 'AllProducts Screen'
                 : 'Let login before!',
             })}
           />
-          <RootStack.Screen name="Cart" component={CartScreen} />
+          <RootStack.Screen
+            name="DetailProduct"
+            component={DetailProductScreen}
+          />
+          <RootStack.Screen
+            name="Cart"
+            component={CartScreen}
+            options={() => ({title: 'Cart Screen'})}
+          />
         </RootStack.Navigator>
       </NavigationContainer>
     </Provider>

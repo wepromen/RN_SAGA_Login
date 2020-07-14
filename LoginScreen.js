@@ -1,7 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
-import {Provider, connect} from 'react-redux';
-import {createStore, combineReducers} from 'redux';
+import {connect} from 'react-redux';
 import * as React from 'react';
 import {View, Text, Button, StyleSheet, Alert} from 'react-native';
 
@@ -32,7 +30,7 @@ class LoginScreen extends React.Component {
       <View style={styles.container}>
         <Text style={styles.paragraph}>
           {this.props.isLogged
-            ? 'Welcome to Dashboard!!!!'
+            ? 'Welcome to AllProducts!!!!'
             : 'Let`s to login before!'}
         </Text>
         <Button
@@ -47,9 +45,6 @@ class LoginScreen extends React.Component {
           onPress={() => {
             console.log('press logout');
             this.props.dispatch({type: 'PRESSBTNLOGOUT'});
-            //   AsyncStorage.multiRemove(['token', 'isLoggined'])
-            //     .then((rs) => dispatch({type: 'LOGOUT'}))
-            //     .catch((err) => console.log(err));
           }}
         />
 
@@ -57,8 +52,9 @@ class LoginScreen extends React.Component {
           title="Go to All Products screen"
           onPress={() => {
             if (this.props.isLogged) {
-              this.props.navigation.navigate('Dashboard', {
+              this.props.navigation.navigate('AllProducts', {
                 isLogged: this.props.isLogged,
+                navigation: this.props.navigation,
               });
             } else {
               Alert.alert('Let`s to login before!');

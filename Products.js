@@ -32,9 +32,9 @@ class Products extends Component {
               flex: 1,
               flexDirection: 'row',
               justifyContent: 'space-between',
-              // alignItems: 'center',
+              alignItems: 'center',
               backgroundColor: 'trangraysparent',
-              padding: 10,
+              paddingBottom: 8,
             }}>
             <Image
               resizeMode={'contain'}
