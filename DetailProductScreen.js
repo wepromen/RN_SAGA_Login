@@ -9,11 +9,16 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
+import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 
 var {width} = Dimensions.get('window');
 
-export default class DetailProductScreen extends Component {
+class DetailProductScreen extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   onClickAddCart(data) {
     const itemcart = {
       girl: data,
@@ -33,14 +38,15 @@ export default class DetailProductScreen extends Component {
           cart.push(itemcart);
           AsyncStorage.setItem('cart', JSON.stringify(cart));
         }
+        return datacart;
       })
       .then((rs) => {
+        let items = JSON.parse(rs);
+        console.log('Detail items: ' + items);
+        this.props.addItemsToCart(items);
         // this.props.navigation.navigate('TabNav');
       })
       .catch((err) => {
-        const cart = [];
-        cart.push(itemcart);
-        AsyncStorage.setItem('cart', JSON.stringify(cart));
         console.log(err);
       });
   }
@@ -125,3 +131,10 @@ export default class DetailProductScreen extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addItemsToCart: (items) => dispatch({type: 'ADD_TO_CART', payload: items}),
+  };
+};
+export default connect(null, mapDispatchToProps)(DetailProductScreen);

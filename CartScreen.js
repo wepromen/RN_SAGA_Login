@@ -24,37 +24,23 @@ class CartScreen extends Component {
       dataCart: [],
       totalPrice: 0,
     };
-
-    // 1. get cart from AsStore
-    AsyncStorage.getItem('cart')
-      .then((cart) => {
-        if (cart !== null) {
-          // We have data!!
-          const dataCart = JSON.parse(cart);
-          this.setState({dataCart: dataCart});
-          console.log('CartScreen mount: ' + dataCart);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.dataCart !== prevProps.dataCart) {
-  //     AsyncStorage.getItem('cart')
-  //       .then((cart) => {
-  //         if (cart !== null) {
-  //           // We have data!!
-  //           const dataCart = JSON.parse(cart);
-  //           this.setState({dataCart: dataCart});
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  // }
+  componentDidUpdate(prevProps) {
+    if (this.props.cartItems !== prevProps.cartItems) {
+      AsyncStorage.getItem('cart')
+        .then((cart) => {
+          if (cart !== null) {
+            // We have data!!
+            const dataCart = JSON.parse(cart);
+            this.setState({dataCart: dataCart});
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
 
   onChangeQual(i, type) {
     const dataCar = this.state.dataCart;
@@ -84,6 +70,7 @@ class CartScreen extends Component {
         <View style={{flex: 1}}>
           <ScrollView>
             {this.state.dataCart.map((item, i) => {
+              totalPrice = 0;
               totalPrice += item.price * item.quantity;
               return (
                 <View
@@ -212,8 +199,27 @@ class CartScreen extends Component {
     );
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    // 1. get cart from AsStore
+    AsyncStorage.getItem('cart')
+      .then((cart) => {
+        if (cart !== null) {
+          // We have data!!
+          const dataCart = JSON.parse(cart);
+          this.setState({dataCart: dataCart});
+          console.log('CartScreen mount: ' + dataCart);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 }
+const mapStateToProps = (state) => {
+  return {
+    cartItems: state.cartItems,
+  };
+};
 
 // const mapDispatchToProps = (dispatch) => {
 //   return {
@@ -222,5 +228,5 @@ class CartScreen extends Component {
 //   };
 // };
 
-// export default connect(null, mapDispatchToProps)(CartScreen);
-export default CartScreen;
+export default connect(mapStateToProps, null)(CartScreen);
+// export default CartScreen;
