@@ -34,7 +34,13 @@ export default class DetailProductScreen extends Component {
           AsyncStorage.setItem('cart', JSON.stringify(cart));
         }
       })
+      .then((rs) => {
+        // this.props.navigation.navigate('TabNav');
+      })
       .catch((err) => {
+        const cart = [];
+        cart.push(itemcart);
+        AsyncStorage.setItem('cart', JSON.stringify(cart));
         console.log(err);
       });
   }

@@ -29,42 +29,32 @@ let store = createStore(
 let RootStack = createStackNavigator();
 let TabStack = createBottomTabNavigator();
 
-function AllScreenStack() {
-  return (
-    <RootStack.Navigator>
-      <RootStack.Screen name="Login" component={LoginScreen} />
-      <RootStack.Screen name="TabNav" component={TabNavigator} />
-      <RootStack.Screen
-        name="AllProducts"
-        component={AllProductsScreen}
-        options={() => ({title: 'AllProducts Screen'})}
-      />
-      <RootStack.Screen name="DetailProduct" component={DetailProductScreen} />
-      <RootStack.Screen
-        name="Cart"
-        component={CartScreen}
-        options={() => ({title: 'Cart Screen'})}
-      />
-    </RootStack.Navigator>
-  );
-}
-
-function TabNavigator() {
-  return (
-    <TabStack.Navigator>
-      <TabStack.Screen name="AllProducts" component={AllProductsScreen} />
-      <TabStack.Screen name="Cart" component={CartScreen} />
-      <TabStack.Screen name="Setting" component={LoginScreen} />
-    </TabStack.Navigator>
-  );
-}
-
 // Render the app container component with the provider around it
 export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <AllScreenStack navigation={this.navigation} route={this.route} />
+        <RootStack.Navigator>
+          <RootStack.Screen name="Login" component={LoginScreen} />
+          <RootStack.Screen
+            name="AllProducts"
+            component={AllProductsScreen}
+            options={({route}) => ({
+              title: route.params.isLogged
+                ? 'AllProducts Screen'
+                : 'Let login before!',
+            })}
+          />
+          <RootStack.Screen
+            name="DetailProduct"
+            component={DetailProductScreen}
+          />
+          <RootStack.Screen
+            name="Cart"
+            component={CartScreen}
+            options={() => ({title: 'Cart Screen'})}
+          />
+        </RootStack.Navigator>
       </NavigationContainer>
     </Provider>
   );

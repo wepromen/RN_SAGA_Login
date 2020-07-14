@@ -16,6 +16,7 @@ class LoginScreen extends React.Component {
         );
         if (typeof token !== 'undefined' && token != null) {
           this.props.dispatch({type: 'LOGIN'});
+          // this.props.navigation.navigate('AllProducts');
         }
       })
       .catch((err) => {
@@ -36,8 +37,11 @@ class LoginScreen extends React.Component {
         <Button
           title="LOGIN"
           onPress={() => {
-            //*** */
             this.props.dispatch({type: 'PRESSBTNLOGIN'});
+            console.log('isLoggined: ' + this.props.isLogged);
+            // if (this.props.isLogged) {
+            //   this.props.navigation.navigate('TabNav');
+            // }
           }}
         />
         <Button
@@ -49,35 +53,30 @@ class LoginScreen extends React.Component {
         />
 
         <Button
-          title="Go to All Products screen"
+          title="Go to TabNav screen"
           onPress={() => {
             if (this.props.isLogged) {
-              this.props.navigation.navigate('AllProducts', {
+              this.props.navigation.navigate('TabNav', {
                 isLogged: this.props.isLogged,
-                navigation: this.props.navigation,
+                // navigation: this.props.navigation,
               });
             } else {
               Alert.alert('Let`s to login before!');
             }
           }}
         />
-        <Button
+        {/* <Button
           title="Go to Cart"
-          onPress={() =>
-            // this.props.navigation.navigate('Cart', {
-            //   isLogged: this.props.isLogged,
-            // })
-            {
-              if (this.props.isLogged) {
-                this.props.navigation.navigate('Cart', {
-                  isLogged: this.props.isLogged,
-                });
-              } else {
-                Alert.alert('Let`s to login before!');
-              }
+          onPress={() => {
+            if (this.props.isLogged) {
+              this.props.navigation.navigate('Cart', {
+                isLogged: this.props.isLogged,
+              });
+            } else {
+              Alert.alert('Let`s to login before!');
             }
-          }
-        />
+          }}
+        /> */}
       </View>
     );
   }

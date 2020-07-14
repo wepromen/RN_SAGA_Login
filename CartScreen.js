@@ -24,9 +24,7 @@ class CartScreen extends Component {
       dataCart: [],
       totalPrice: 0,
     };
-  }
 
-  componentDidMount() {
     // 1. get cart from AsStore
     AsyncStorage.getItem('cart')
       .then((cart) => {
@@ -34,12 +32,29 @@ class CartScreen extends Component {
           // We have data!!
           const dataCart = JSON.parse(cart);
           this.setState({dataCart: dataCart});
+          console.log('CartScreen mount: ' + dataCart);
         }
       })
       .catch((err) => {
-        alert(err);
+        console.log(err);
       });
   }
+
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.dataCart !== prevProps.dataCart) {
+  //     AsyncStorage.getItem('cart')
+  //       .then((cart) => {
+  //         if (cart !== null) {
+  //           // We have data!!
+  //           const dataCart = JSON.parse(cart);
+  //           this.setState({dataCart: dataCart});
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  // }
 
   onChangeQual(i, type) {
     const dataCar = this.state.dataCart;
@@ -196,13 +211,16 @@ class CartScreen extends Component {
       </View>
     );
   }
+
+  componentDidMount() {}
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    removeItem: (product) =>
-      dispatch({type: 'REMOVE_FROM_CART', payload: product}),
-  };
-};
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     removeItem: (product) =>
+//       dispatch({type: 'REMOVE_FROM_CART', payload: product}),
+//   };
+// };
 
-export default connect(null, mapDispatchToProps)(CartScreen);
+// export default connect(null, mapDispatchToProps)(CartScreen);
+export default CartScreen;
