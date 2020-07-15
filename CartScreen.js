@@ -80,6 +80,9 @@ class CartScreen extends Component {
       dataCar[i].quantity = iquantity;
     } else if (type === false && iquantity === 1) {
       dataCar.splice(i, 1);
+      AsyncStorage.removeItem('cart');
+      this.setState({totalPrice: 0});
+      this.forceUpdate();
     }
     this.setState({dataCart: dataCar});
     this.onChangeTotal();
@@ -203,7 +206,7 @@ class CartScreen extends Component {
 
             <TouchableOpacity
               onPress={() => {
-                Alert.alert('Total: ' + totalPrice);
+                // Alert.alert('Total: ' + totalPrice);
               }}
               style={{
                 backgroundColor: '#33c37d',
