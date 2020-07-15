@@ -1,3 +1,4 @@
+let isPressLogin = false;
 export default function authReducer(state = false, action) {
   if (typeof state === 'undefined') {
     return false;
@@ -9,7 +10,8 @@ export default function authReducer(state = false, action) {
       return false;
     case 'PRESSBTNLOGIN':
       console.log('Reducer Action is PRESSBTNLOGIN');
-      return false;
+      isPressLogin = true;
+      return {state, isPressLogin: isPressLogin};
     case 'LOGIN':
       console.log('Reducer Action is LOGIN');
       return true;

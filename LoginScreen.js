@@ -9,6 +9,7 @@ class LoginScreen extends React.Component {
   }
 
   componentDidMount() {
+    console.log('===isPressLogin ' + this.props.isLogged.isPressLogin);
     AsyncStorage.getItem('token')
       .then((token) => {
         console.log(
@@ -16,6 +17,7 @@ class LoginScreen extends React.Component {
         );
         if (typeof token !== 'undefined' && token != null) {
           this.props.dispatch({type: 'LOGIN'});
+          console.log('===LoginScreen move to TabNav ');
           this.props.navigation.navigate('TabNav', {
             isLogged: this.props.isLogged,
           });
@@ -25,6 +27,13 @@ class LoginScreen extends React.Component {
         this.dispatch({type: 'PRESSBTNLOGOUT'});
         console.log(err);
       });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.isLogged.isPressLogin !== prevProps.isPressLogin) {
+      console.log('===isPressLogin ' + this.props.isLogged.isPressLogin);
+      this.componentDidMount();
+    }
   }
 
   // isLogged before is app state
@@ -40,12 +49,6 @@ class LoginScreen extends React.Component {
           title="LOGIN"
           onPress={() => {
             this.props.dispatch({type: 'PRESSBTNLOGIN'});
-            console.log('isLoggined: ' + this.props.isLogged);
-            if (this.props.isLogged) {
-              this.props.navigation.navigate('TabNav', {
-                isLogged: this.props.isLogged,
-              });
-            }
           }}
         />
         <Button
@@ -62,7 +65,6 @@ class LoginScreen extends React.Component {
             if (this.props.isLogged) {
               this.props.navigation.navigate('TabNav', {
                 isLogged: this.props.isLogged,
-                // navigation: this.props.navigation,
               });
             } else {
               Alert.alert('Let`s to login before!');

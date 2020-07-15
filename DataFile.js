@@ -26,7 +26,7 @@ var DataFile = [
   {
     id: '5',
     name: '3D',
-    price: 0,
+    price: 1,
     image: 'https://static.taigame.org/avatars/59/1479059-667.jpg',
   },
   {

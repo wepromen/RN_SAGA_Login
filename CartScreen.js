@@ -15,7 +15,8 @@ import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 
 var {width} = Dimensions.get('window');
-var totalPrice = 0;
+// var totalPrice = 0;
+// var itemPrice = 0;
 console.disableYellowBox = true;
 class CartScreen extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class CartScreen extends Component {
     this.state = {
       dataCart: [],
       totalPrice: 0,
+      itemPrice: 0,
     };
   }
 
@@ -31,11 +33,16 @@ class CartScreen extends Component {
     AsyncStorage.getItem('cart')
       .then((cart) => {
         if (cart !== null) {
-          // We have data!!
           const dataCart = JSON.parse(cart);
-          this.setState({dataCart: dataCart});
+          this.setState({
+            dataCart: dataCart,
+          });
           console.log('CartScreen mount: ' + dataCart);
         }
+        return this.state.dataCart;
+      })
+      .then((rs) => {
+        this.onChangeTotal();
       })
       .catch((err) => {
         console.log('CartS did mount: ' + err);
@@ -48,6 +55,19 @@ class CartScreen extends Component {
     }
   }
 
+  onChangeTotal() {
+    let totalPrice = 0;
+    let itemPrice = 0;
+    this.state.dataCart.map((item, i) => {
+      itemPrice = item.price * item.quantity;
+      totalPrice += itemPrice;
+      this.setState({
+        itemPrice: itemPrice,
+        totalPrice: totalPrice,
+      });
+    });
+  }
+
   onChangeQual(i, type) {
     const dataCar = this.state.dataCart;
     let iquantity = dataCar[i].quantity;
@@ -55,20 +75,16 @@ class CartScreen extends Component {
     if (type) {
       iquantity += 1;
       dataCar[i].quantity = iquantity;
-      this.setState({dataCart: dataCar});
-      totalPrice = 0;
     } else if (type === false && iquantity >= 2) {
       iquantity -= 1;
       dataCar[i].quantity = iquantity;
-      this.setState({dataCart: dataCar});
-      totalPrice = 0;
     } else if (type === false && iquantity === 1) {
       dataCar.splice(i, 1);
-      this.setState({dataCart: dataCar});
-      totalPrice = 0;
     }
+    this.setState({dataCart: dataCar});
+    this.onChangeTotal();
     AsyncStorage.setItem('cart', JSON.stringify(dataCar));
-    if (totalPrice === 0) {
+    if (this.state.totalPrice === 0) {
       AsyncStorage.removeItem('cart');
     }
   }
@@ -79,7 +95,11 @@ class CartScreen extends Component {
         <View style={{flex: 1}}>
           <ScrollView>
             {this.state.dataCart.map((item, i) => {
-              totalPrice += item.price * item.quantity;
+              {
+                /* itemPrice = item.price * item.quantity;
+              totalPrice += itemPrice; */
+              }
+
               return (
                 <View
                   style={{
@@ -177,7 +197,7 @@ class CartScreen extends Component {
                   fontWeight: 'bold',
                   color: 'red',
                 }}>
-                Total: ${totalPrice}
+                Total: $ {this.state.totalPrice}
               </Text>
             </View>
 

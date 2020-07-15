@@ -43,7 +43,7 @@ class DetailProductScreen extends Component {
             console.log('   Push New Item into Cart: ' + itemcart.girl.name);
             cart.push(itemcart);
           }
-          AsyncStorage.removeItem('cart');
+          // AsyncStorage.removeItem('cart');
           return cart;
         } else {
           let cart = [];
@@ -51,7 +51,7 @@ class DetailProductScreen extends Component {
           cart.map((item, i) => {
             console.log('Detail - create cart[] item: ' + item.girl.name);
           });
-          AsyncStorage.removeItem('cart');
+          // AsyncStorage.removeItem('cart');
           return cart;
         }
       })
