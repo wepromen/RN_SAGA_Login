@@ -37,7 +37,7 @@ class CartScreen extends Component {
           }
         })
         .catch((err) => {
-          console.log(err);
+          console.log('CartS did mount: ' + err);
         });
     }
   }
@@ -62,6 +62,9 @@ class CartScreen extends Component {
       totalPrice = 0;
     }
     AsyncStorage.setItem('cart', JSON.stringify(dataCar));
+    if (totalPrice === 0) {
+      AsyncStorage.removeItem('cart');
+    }
   }
 
   render() {
@@ -70,7 +73,6 @@ class CartScreen extends Component {
         <View style={{flex: 1}}>
           <ScrollView>
             {this.state.dataCart.map((item, i) => {
-              totalPrice = 0;
               totalPrice += item.price * item.quantity;
               return (
                 <View
@@ -112,6 +114,7 @@ class CartScreen extends Component {
                           fontWeight: 'bold',
                           color: '#33c37d',
                           fontSize: 20,
+                          width: width / 3,
                         }}>
                         $ {item.price * item.quantity}
                       </Text>
@@ -211,7 +214,7 @@ class CartScreen extends Component {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.log('CartS did mount: ' + err);
       });
   }
 }
