@@ -14,7 +14,7 @@ import Products from './Products';
 import {connect} from 'react-redux';
 
 var {width} = Dimensions.get('window');
-
+console.disableYellowBox = true;
 class AllProductsScreen extends Component {
   constructor(props) {
     super(props);

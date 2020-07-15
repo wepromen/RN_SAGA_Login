@@ -16,7 +16,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 var {width} = Dimensions.get('window');
 var totalPrice = 0;
-
+console.disableYellowBox = true;
 class CartScreen extends Component {
   constructor(props) {
     super(props);
@@ -26,19 +26,25 @@ class CartScreen extends Component {
     };
   }
 
+  componentDidMount() {
+    // 1. get cart from AsStore
+    AsyncStorage.getItem('cart')
+      .then((cart) => {
+        if (cart !== null) {
+          // We have data!!
+          const dataCart = JSON.parse(cart);
+          this.setState({dataCart: dataCart});
+          console.log('CartScreen mount: ' + dataCart);
+        }
+      })
+      .catch((err) => {
+        console.log('CartS did mount: ' + err);
+      });
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.cartItems !== prevProps.cartItems) {
-      AsyncStorage.getItem('cart')
-        .then((cart) => {
-          if (cart !== null) {
-            // We have data!!
-            const dataCart = JSON.parse(cart);
-            this.setState({dataCart: dataCart});
-          }
-        })
-        .catch((err) => {
-          console.log('CartS did mount: ' + err);
-        });
+      this.componentDidMount();
     }
   }
 
@@ -200,22 +206,6 @@ class CartScreen extends Component {
         </View>
       </View>
     );
-  }
-
-  componentDidMount() {
-    // 1. get cart from AsStore
-    AsyncStorage.getItem('cart')
-      .then((cart) => {
-        if (cart !== null) {
-          // We have data!!
-          const dataCart = JSON.parse(cart);
-          this.setState({dataCart: dataCart});
-          console.log('CartScreen mount: ' + dataCart);
-        }
-      })
-      .catch((err) => {
-        console.log('CartS did mount: ' + err);
-      });
   }
 }
 const mapStateToProps = (state) => {

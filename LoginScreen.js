@@ -16,7 +16,9 @@ class LoginScreen extends React.Component {
         );
         if (typeof token !== 'undefined' && token != null) {
           this.props.dispatch({type: 'LOGIN'});
-          // this.props.navigation.navigate('AllProducts');
+          this.props.navigation.navigate('TabNav', {
+            isLogged: this.props.isLogged,
+          });
         }
       })
       .catch((err) => {
@@ -39,9 +41,11 @@ class LoginScreen extends React.Component {
           onPress={() => {
             this.props.dispatch({type: 'PRESSBTNLOGIN'});
             console.log('isLoggined: ' + this.props.isLogged);
-            // if (this.props.isLogged) {
-            //   this.props.navigation.navigate('TabNav');
-            // }
+            if (this.props.isLogged) {
+              this.props.navigation.navigate('TabNav', {
+                isLogged: this.props.isLogged,
+              });
+            }
           }}
         />
         <Button

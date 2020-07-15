@@ -27,44 +27,42 @@ class DetailProductScreen extends Component {
     };
 
     AsyncStorage.getItem('cart')
-      .then(async (datacart) => {
+      .then((datacart) => {
         if (datacart !== null) {
           // We have data!!!
-          const cart = await JSON.parse(datacart);
-          // const cart = datacart;
-
-          cart.forEach(async (element) => {
-            console.log(
-              'CartEls: ' +
-                element.girl.name +
-                ' Quantity: ' +
-                element.quantity,
-            );
-            if (element.girl.name === data.name) {
-              await element.quantity++;
-            } else {
-              await cart.push(itemcart);
+          let cart = JSON.parse(datacart);
+          let isExist = false;
+          cart.map((item, i, cartOld) => {
+            console.log(item.girl.name + ' vs ' + data.name);
+            if (item.girl.name === data.name) {
+              item.quantity++;
+              isExist = true;
             }
           });
-          // cart.push(itemcart);
-
-          await AsyncStorage.setItem('cart', JSON.stringify(cart));
-          console.log('===Detail Cart: ' + cart);
-
+          if (!isExist) {
+            console.log('   Push New Item into Cart: ' + itemcart.girl.name);
+            cart.push(itemcart);
+          }
+          AsyncStorage.removeItem('cart');
           return cart;
         } else {
-          const cart = [];
+          let cart = [];
           cart.push(itemcart);
           cart.map((item, i) => {
             console.log('Detail - create cart[] item: ' + item.girl.name);
           });
-          AsyncStorage.setItem('cart', JSON.stringify(cart));
+          AsyncStorage.removeItem('cart');
           return cart;
         }
       })
       .then((rs) => {
+        // *** set into Async
+        AsyncStorage.setItem('cart', JSON.stringify(rs));
+        return rs;
+      })
+      .then((rs) => {
         console.log('Detail items: ' + rs);
-        // *** Dispatch cart array !!!!
+        // *** Set into props !!!!
         this.props.addItemsToCart(rs);
         this.props.navigation.navigate('TabNav');
       })
@@ -79,7 +77,6 @@ class DetailProductScreen extends Component {
         style={{
           flex: 1,
           flexDirection: 'column',
-          //   justifyContent: 'space-between',
           alignItems: 'center',
           backgroundColor: 'trangraysparent',
           paddingBottom: 8,

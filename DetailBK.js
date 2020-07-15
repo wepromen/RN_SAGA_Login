@@ -33,7 +33,7 @@ class DetailProductScreen extends Component {
           const cart = JSON.parse(datacart);
           // const cart = datacart;
 
-          cart.forEach((element) => {
+          cart.forEach(async (element) => {
             console.log(
               'CartEls: ' +
                 element.girl.name +
@@ -49,7 +49,7 @@ class DetailProductScreen extends Component {
           // cart.push(itemcart);
 
           AsyncStorage.setItem('cart', JSON.stringify(cart));
-          console.log('Cart ' + cart);
+          console.log('===Detail Cart: ' + cart);
 
           return cart;
         } else {
@@ -63,11 +63,10 @@ class DetailProductScreen extends Component {
         }
       })
       .then((rs) => {
-        // let items = JSON.parse(datacart);
         console.log('Detail items: ' + rs);
         // *** Dispatch cart array !!!!
         this.props.addItemsToCart(rs);
-        // this.props.navigation.navigate('TabNav');
+        this.props.navigation.navigate('TabNav');
       })
       .catch((err) => {
         console.log('DetailS ClickAdd err: ' + err);
