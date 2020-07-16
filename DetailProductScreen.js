@@ -14,8 +14,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 var {width} = Dimensions.get('window');
 
-// const itemData = this.props.route.params.item;
-
 class DetailProductScreen extends Component {
   constructor(props) {
     super(props);
@@ -29,8 +27,6 @@ class DetailProductScreen extends Component {
   componentDidMount() {}
 
   onClickAddCart(data) {
-    // this.setState({girl: data, price: data.price});
-
     const itemcart = {
       girl: this.state.girl,
       quantity: this.state.quantity,
@@ -53,7 +49,6 @@ class DetailProductScreen extends Component {
             console.log('   Push New Item into Cart: ' + itemcart.girl.name);
             cart.push(itemcart);
           }
-          // AsyncStorage.removeItem('cart');
           return cart;
         } else {
           let cart = [];
@@ -61,7 +56,6 @@ class DetailProductScreen extends Component {
           cart.map((item, i) => {
             console.log('Detail - create cart[] item: ' + item.girl.name);
           });
-          // AsyncStorage.removeItem('cart');
           return cart;
         }
       })
@@ -82,22 +76,14 @@ class DetailProductScreen extends Component {
   }
 
   onChangeQual(type) {
-    // const dataCar = this.state.dataCart;
     let iquantity = this.state.quantity;
 
     if (type) {
       iquantity += 1;
-      // dataCar[i].quantity = iquantity;
-    } else if (type === false && iquantity >= 1) {
+    } else if (type === false && iquantity >= 2) {
       iquantity -= 1;
-      // dataCar[i].quantity = iquantity;
     }
-    //else if (type === false && iquantity === 1) {
-    //   dataCar.splice(i, 1);
-    //   AsyncStorage.removeItem('cart');
-    //   this.setState({totalPrice: 0});
-    //   this.forceUpdate();
-    // }
+
     this.setState({quantity: iquantity});
   }
 
@@ -142,7 +128,7 @@ class DetailProductScreen extends Component {
                 fontSize: 20,
                 // alignItems: 'center',
               }}>
-              $ {item.price}
+              {/* $ {item.price} */}$ {this.state.price * this.state.quantity}
             </Text>
           </View>
           <View
