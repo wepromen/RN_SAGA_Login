@@ -29,6 +29,7 @@ class CartScreen extends Component {
   }
 
   componentDidMount() {
+    // console.log(this.props.cartItems.quantity);
     // 1. get cart from AsStore
     AsyncStorage.getItem('cart')
       .then((cart) => {
@@ -37,7 +38,7 @@ class CartScreen extends Component {
           this.setState({
             dataCart: dataCart,
           });
-          console.log('CartScreen mount: ' + dataCart);
+          // console.log('CartScreen mount: ' + dataCart);
         }
         return this.state.dataCart;
       })
@@ -52,6 +53,7 @@ class CartScreen extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.cartItems !== prevProps.cartItems) {
       this.componentDidMount();
+      this.forceUpdate();
     }
   }
 
@@ -75,18 +77,25 @@ class CartScreen extends Component {
     if (type) {
       iquantity += 1;
       dataCar[i].quantity = iquantity;
+      this.props.updateQt(dataCar[i].girl.id, iquantity);
     } else if (type === false && iquantity >= 2) {
       iquantity -= 1;
       dataCar[i].quantity = iquantity;
+      this.props.updateQt(dataCar[i].girl.id, iquantity);
     } else if (type === false && iquantity === 1) {
+      this.props.updateQt(dataCar[i].girl.id, 0);
       dataCar.splice(i, 1);
       AsyncStorage.removeItem('cart');
       this.setState({totalPrice: 0});
       this.forceUpdate();
     }
     this.setState({dataCart: dataCar});
+
     this.onChangeTotal();
+    // console.log(dataCar);
+
     AsyncStorage.setItem('cart', JSON.stringify(dataCar));
+
     if (this.state.totalPrice === 0) {
       AsyncStorage.removeItem('cart');
     }
@@ -98,11 +107,6 @@ class CartScreen extends Component {
         <View style={{flex: 1}}>
           <ScrollView>
             {this.state.dataCart.map((item, i) => {
-              {
-                /* itemPrice = item.price * item.quantity;
-              totalPrice += itemPrice; */
-              }
-
               return (
                 <View
                   style={{
@@ -243,6 +247,23 @@ const mapStateToProps = (state) => {
 //       dispatch({type: 'REMOVE_FROM_CART', payload: product}),
 //   };
 // };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addItemsToCart: (items, id, quantity) =>
+      dispatch({
+        type: 'ADD_TO_CART',
+        payload: items,
+        quantity: quantity,
+        id: id,
+      }),
+    updateQt: (id, quantity) =>
+      dispatch({
+        type: 'UPDATEQT',
+        quantity: quantity,
+        id: id,
+      }),
+  };
+};
 
-export default connect(mapStateToProps, null)(CartScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(CartScreen);
 // export default CartScreen;

@@ -18,6 +18,7 @@ class DetailProductScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: this.props.route.params.item.id,
       girl: this.props.route.params.item,
       quantity: 1,
       price: this.props.route.params.item.price,
@@ -28,6 +29,7 @@ class DetailProductScreen extends Component {
 
   onClickAddCart(data) {
     const itemcart = {
+      id: this.state.girl.id,
       girl: this.state.girl,
       quantity: this.state.quantity,
       price: this.state.price,
@@ -38,7 +40,7 @@ class DetailProductScreen extends Component {
         if (datacart !== null) {
           let cart = JSON.parse(datacart);
           let isExist = false;
-          cart.map((item, i, cartOld) => {
+          cart.map((item, i) => {
             console.log(item.girl.name + ' vs ' + data.name);
             if (item.girl.name === data.name) {
               item.quantity++;
@@ -67,7 +69,7 @@ class DetailProductScreen extends Component {
       .then((rs) => {
         console.log('Detail items: ' + rs);
         // *** Set into props !!!!
-        this.props.addItemsToCart(rs);
+        this.props.addItemsToCart(rs, this.state.girl.id, this.state.quantity);
         this.props.navigation.navigate('TabNav');
       })
       .catch((err) => {
@@ -85,6 +87,8 @@ class DetailProductScreen extends Component {
     }
 
     this.setState({quantity: iquantity});
+    // this.props.addItemsToCart(rs, this.state.girl.id, this.state.quantity);
+    this.props.updateQt(this.state.girl.id, this.state.quantity);
   }
 
   render() {
@@ -96,7 +100,7 @@ class DetailProductScreen extends Component {
           flex: 1,
           flexDirection: 'column',
           alignItems: 'center',
-          backgroundColor: 'trangraysparent',
+          // backgroundColor: 'trangraysparent',
           paddingBottom: 8,
         }}>
         <Image
@@ -216,7 +220,19 @@ class DetailProductScreen extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addItemsToCart: (items) => dispatch({type: 'ADD_TO_CART', payload: items}),
+    addItemsToCart: (items, id, quantity) =>
+      dispatch({
+        type: 'ADD_TO_CART',
+        payload: items,
+        quantity: quantity,
+        id: id,
+      }),
+    updateQt: (id, quantity) =>
+      dispatch({
+        type: 'UPDATEQT',
+        quantity: quantity,
+        id: id,
+      }),
   };
 };
 export default connect(null, mapDispatchToProps)(DetailProductScreen);

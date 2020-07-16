@@ -11,21 +11,68 @@ import {
 } from 'react-native';
 import DataFile from './DataFile';
 import {connect} from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
 
 var {width} = Dimensions.get('window');
 console.disableYellowBox = true;
+
 class AllProductsScreen extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      dataCart: [],
+    };
+  }
+  componentDidMount() {
+    let arrQt = [];
+    AsyncStorage.getItem('cart')
+      .then((cart) => {
+        if (cart !== null) {
+          const dataCart = JSON.parse(cart);
+          this.setState({dataCart: dataCart});
+        }
+      })
+      .catch((err) => {
+        console.log(' ' + err);
+      });
+
+    console.log(
+      'AllProductS - id: ' +
+        this.props.cartItems.id +
+        ' Qt: ' +
+        this.props.cartItems.quantity,
+    );
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.cartItems !== prevProps.cartItems) {
+      this.componentDidMount();
+      this.forceUpdate();
+    }
+  }
+
+  updateQuantity(byId) {
+    let qt = 0;
+    this.state.dataCart.forEach((el) => {
+      if (el.id === byId.toString()) {
+        qt = el.quantity;
+      }
+      return qt;
+    });
+    // console.log(qt !== 0 ? qt : '');
+    if (qt !== 0) {
+      return qt;
+    } else {
+      return 0;
+    }
   }
 
   render() {
-    const Item = ({item, name, price}) => (
+    const Item = ({item}) => (
       <View
         style={{
           width: width - 20,
           margin: 10,
-          backgroundColor: 'transparent',
+          // backgroundColor: 'transparent',
           flexDirection: 'row',
           borderBottomWidth: 2,
           borderColor: '#cccccc',
@@ -41,7 +88,7 @@ class AllProductsScreen extends Component {
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-              backgroundColor: 'trangraysparent',
+              // backgroundColor: 'trangraysparent',
               paddingBottom: 8,
             }}>
             <Image
@@ -58,9 +105,25 @@ class AllProductsScreen extends Component {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                 }}>
+                {/* Quantity Order */}
                 <Text
-                  style={{fontWeight: 'bold', fontSize: 20, width: width / 3}}>
-                  {name}
+                  style={{
+                    fontWeight: 'bold',
+                    color: '#33c37d',
+                    fontSize: 17,
+                    width: width / 13,
+                  }}>
+                  {this.updateQuantity(item.id) !== 0
+                    ? this.updateQuantity(item.id) + 'x'
+                    : ''}
+                </Text>
+
+                <Text
+                  style={{
+                    fontSize: 20,
+                    width: width / 3.5,
+                  }}>
+                  {item.name}
                 </Text>
                 <Text
                   style={{
@@ -69,7 +132,7 @@ class AllProductsScreen extends Component {
                     fontSize: 20,
                     // alignItems: 'center',
                   }}>
-                  $ {price}
+                  $ {item.price}
                 </Text>
               </View>
               <View
@@ -95,9 +158,7 @@ class AllProductsScreen extends Component {
         <View style={{flex: 1}}>
           <FlatList
             data={DataFile}
-            renderItem={({item}) => (
-              <Item item={item} name={item.name} price={item.price} />
-            )}
+            renderItem={({item}) => <Item item={item} />}
             keyExtractor={(item) => item.id}
           />
         </View>
@@ -108,7 +169,8 @@ class AllProductsScreen extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isLogged: true,
+    // items: state.items,
+    // quantity: state.quantity,
     cartItems: state.cartItems,
   };
 };
