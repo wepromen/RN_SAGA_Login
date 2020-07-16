@@ -14,22 +14,32 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 var {width} = Dimensions.get('window');
 
+// const itemData = this.props.route.params.item;
+
 class DetailProductScreen extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      girl: this.props.route.params.item,
+      quantity: 1,
+      price: this.props.route.params.item.price,
+    };
   }
 
+  componentDidMount() {}
+
   onClickAddCart(data) {
+    // this.setState({girl: data, price: data.price});
+
     const itemcart = {
-      girl: data,
-      quantity: 1,
-      price: data.price,
+      girl: this.state.girl,
+      quantity: this.state.quantity,
+      price: this.state.price,
     };
 
     AsyncStorage.getItem('cart')
       .then((datacart) => {
         if (datacart !== null) {
-          // We have data!!!
           let cart = JSON.parse(datacart);
           let isExist = false;
           cart.map((item, i, cartOld) => {
@@ -70,8 +80,30 @@ class DetailProductScreen extends Component {
         console.log('DetailS ClickAdd err: ' + err);
       });
   }
+
+  onChangeQual(type) {
+    // const dataCar = this.state.dataCart;
+    let iquantity = this.state.quantity;
+
+    if (type) {
+      iquantity += 1;
+      // dataCar[i].quantity = iquantity;
+    } else if (type === false && iquantity >= 1) {
+      iquantity -= 1;
+      // dataCar[i].quantity = iquantity;
+    }
+    //else if (type === false && iquantity === 1) {
+    //   dataCar.splice(i, 1);
+    //   AsyncStorage.removeItem('cart');
+    //   this.setState({totalPrice: 0});
+    //   this.forceUpdate();
+    // }
+    this.setState({quantity: iquantity});
+  }
+
   render() {
     const item = this.props.route.params.item;
+
     return (
       <View
         style={{
@@ -115,15 +147,60 @@ class DetailProductScreen extends Component {
           </View>
           <View
             style={{
+              // backgroundColor: 'gray',
               flexDirection: 'column',
               paddingTop: 7,
               paddingLeft: 20,
               paddingRight: 20,
               width: width,
-              height: width / 2.2,
+              height: width / 3.5,
             }}>
             <Text>This is content of product aaaaa aaaaaa aaaaaaa aaaa</Text>
           </View>
+          {/* ================================================Change to quantity section */}
+          <View
+            style={{
+              // backgroundColor: 'gray',
+              justifyContent: 'center',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <TouchableOpacity onPress={() => this.onChangeQual(false)}>
+              <Text
+                style={{
+                  alignItems: 'center',
+                  color: '#33c37d',
+                  paddingHorizontal: 8,
+                  fontWeight: 'bold',
+                  fontSize: 50,
+                }}>
+                -
+              </Text>
+            </TouchableOpacity>
+            <Text
+              style={{
+                alignItems: 'center',
+                paddingHorizontal: 30,
+                fontWeight: 'bold',
+                fontSize: 18,
+              }}>
+              {this.state.quantity}
+            </Text>
+            <TouchableOpacity onPress={() => this.onChangeQual(true)}>
+              <Text
+                style={{
+                  alignItems: 'center',
+                  color: '#33c37d',
+                  paddingHorizontal: 8,
+                  fontWeight: 'bold',
+                  fontSize: 50,
+                }}>
+                +
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* ================================================Change to quantity section */}
           <TouchableOpacity
             onPress={() => {
               this.onClickAddCart(item);

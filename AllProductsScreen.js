@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import DataFile from './DataFile';
-import Products from './Products';
 import {connect} from 'react-redux';
 
 var {width} = Dimensions.get('window');
@@ -102,12 +101,6 @@ class AllProductsScreen extends Component {
             keyExtractor={(item) => item.id}
           />
         </View>
-        {/* <Products
-          products={DataFile}
-          onPress={(item) => {
-            this.props.navigation.navigate('DetailProduct', {item});
-          }}
-        /> */}
       </View>
     );
   }
