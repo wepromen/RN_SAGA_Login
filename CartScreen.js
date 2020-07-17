@@ -129,7 +129,6 @@ class CartScreen extends Component {
                       backgroundColor: 'transparent',
                       paddingTop: 10,
                       paddingLeft: 10,
-
                       justifyContent: 'space-between',
                     }}>
                     <View>
@@ -214,15 +213,17 @@ class CartScreen extends Component {
               }}
               style={{
                 backgroundColor: '#33c37d',
-                width: width - 30,
+                width: width - 20,
+                height: width - 320,
                 alignItems: 'center',
-                padding: 15,
+                padding: 5,
                 borderRadius: 5,
-                margin: 15,
+                margin: 10,
+                justifyContent: 'center',
               }}>
               <Text
                 style={{
-                  fontSize: 24,
+                  fontSize: 18,
                   fontWeight: 'bold',
                   color: 'white',
                 }}>

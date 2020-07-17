@@ -58,7 +58,6 @@ class AllProductsScreen extends Component {
       }
       return qt;
     });
-    // console.log(qt !== 0 ? qt : '');
     if (qt !== 0) {
       return qt;
     } else {
@@ -161,6 +160,27 @@ class AllProductsScreen extends Component {
             renderItem={({item}) => <Item item={item} />}
             keyExtractor={(item) => item.id}
           />
+          <TouchableOpacity
+            onPress={() => {}}
+            style={{
+              backgroundColor: '#33c37d',
+              width: width - 20,
+              height: width - 320,
+              alignItems: 'center',
+              padding: 5,
+              borderRadius: 5,
+              margin: 10,
+              justifyContent: 'center',
+            }}>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: 'bold',
+                color: 'white',
+              }}>
+              View to Cart
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -169,8 +189,6 @@ class AllProductsScreen extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    // items: state.items,
-    // quantity: state.quantity,
     cartItems: state.cartItems,
   };
 };
