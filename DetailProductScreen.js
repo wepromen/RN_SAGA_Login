@@ -104,7 +104,7 @@ class DetailProductScreen extends Component {
           paddingBottom: 8,
         }}>
         <Image
-          resizeMode={'contain'}
+          resizeMode={'cover'}
           style={{width: width, height: width / 1.7}}
           source={{uri: item.image}}
         />
@@ -132,12 +132,11 @@ class DetailProductScreen extends Component {
                 fontSize: 20,
                 // alignItems: 'center',
               }}>
-              {/* $ {item.price} */}$ {this.state.price * this.state.quantity}
+              $ {this.state.price * this.state.quantity}
             </Text>
           </View>
           <View
             style={{
-              // backgroundColor: 'gray',
               flexDirection: 'column',
               paddingTop: 7,
               paddingLeft: 20,
@@ -154,6 +153,7 @@ class DetailProductScreen extends Component {
               justifyContent: 'center',
               flexDirection: 'row',
               alignItems: 'center',
+              paddingBottom: 4,
             }}>
             <TouchableOpacity onPress={() => this.onChangeQual(false)}>
               <Text
@@ -196,16 +196,19 @@ class DetailProductScreen extends Component {
               this.onClickAddCart(item);
             }}
             style={{
+              // flexDirection: 'row',
               backgroundColor: '#33c37d',
-              width: width - 30,
+              width: width - 20,
+              height: width - 320,
               alignItems: 'center',
-              padding: 15,
+              padding: 5,
               borderRadius: 5,
-              margin: 15,
+              margin: 10,
+              justifyContent: 'space-between',
             }}>
             <Text
               style={{
-                fontSize: 24,
+                fontSize: 18,
                 fontWeight: 'bold',
                 color: 'white',
               }}>

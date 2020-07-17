@@ -1,4 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
+console.disableYellowBox = true;
+
 import React, {Component} from 'react';
 import {
   View,
@@ -14,25 +16,35 @@ import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 
 var {width} = Dimensions.get('window');
-console.disableYellowBox = true;
 
 class AllProductsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataCart: [],
+      dataCart: null,
+      totalQuantity: 0,
+      totalPrice: 0,
     };
   }
   componentDidMount() {
-    let arrQt = [];
+    // let arrQt = [];
     AsyncStorage.getItem('cart')
       .then((cart) => {
+        let rs;
         if (cart !== null) {
-          const dataCart = JSON.parse(cart);
-          this.setState({dataCart: dataCart});
+          rs = JSON.parse(cart);
         }
+        return rs;
+      })
+      .then((rs) => {
+        this.setState({dataCart: rs});
+        this.updateCartInfo(rs);
       })
       .catch((err) => {
+        this.setState({
+          totalQuantity: 0,
+          totalPrice: 0,
+        });
         console.log(' ' + err);
       });
 
@@ -43,25 +55,65 @@ class AllProductsScreen extends Component {
         this.props.cartItems.quantity,
     );
   }
-  componentDidUpdate(prevProps) {
-    if (this.props.cartItems !== prevProps.cartItems) {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.cartItems !== this.props.cartItems) {
       this.componentDidMount();
-      this.forceUpdate();
+    }
+    if (prevState.dataCart !== this.state.dataCart) {
+      this.setState({
+        totalQuantity: 0,
+        totalPrice: 0,
+      });
+    }
+  }
+
+  updateCartInfo(dataCart) {
+    let totalQuantity = 0;
+    let itemPrice = 0;
+    let totalPrice = 0;
+    console.log(' AllPro - dataCart: ' + this.state.dataCart);
+
+    if (dataCart !== null) {
+      dataCart.map((item, i) => {
+        totalQuantity += item.quantity;
+        itemPrice = item.price * item.quantity;
+        totalPrice += itemPrice;
+        this.setState({
+          totalQuantity: totalQuantity,
+          totalPrice: totalPrice,
+        });
+        console.log(
+          ' state totalQuantity: ' +
+            this.state.totalQuantity +
+            ' totalPrice: ' +
+            this.state.totalPrice,
+        );
+      });
+    } else {
+      console.log(' else AllPro - dataCart: ' + this.state.dataCart);
+
+      this.setState({
+        totalQuantity: 0,
+        totalPrice: 0,
+      });
+      console.log(this.state.totalQuantity);
     }
   }
 
   updateQuantity(byId) {
     let qt = 0;
-    this.state.dataCart.forEach((el) => {
-      if (el.id === byId.toString()) {
-        qt = el.quantity;
+    if (this.state.dataCart !== null) {
+      this.state.dataCart.forEach((el) => {
+        if (el.id === byId.toString()) {
+          qt = el.quantity;
+        }
+        return qt;
+      });
+      if (qt !== 0) {
+        return qt;
+      } else {
+        return 0;
       }
-      return qt;
-    });
-    if (qt !== 0) {
-      return qt;
-    } else {
-      return 0;
     }
   }
 
@@ -160,27 +212,56 @@ class AllProductsScreen extends Component {
             renderItem={({item}) => <Item item={item} />}
             keyExtractor={(item) => item.id}
           />
-          <TouchableOpacity
-            onPress={() => {}}
-            style={{
-              backgroundColor: '#33c37d',
-              width: width - 20,
-              height: width - 320,
-              alignItems: 'center',
-              padding: 5,
-              borderRadius: 5,
-              margin: 10,
-              justifyContent: 'center',
-            }}>
-            <Text
+          {/* View to Cart BTN */}
+          {this.state.totalQuantity !== 0 ? (
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('Cart');
+              }}
               style={{
-                fontSize: 18,
-                fontWeight: 'bold',
-                color: 'white',
+                flexDirection: 'row',
+                backgroundColor: '#33c37d',
+                width: width - 20,
+                height: width - 320,
+                alignItems: 'center',
+                padding: 5,
+                borderRadius: 5,
+                margin: 10,
+                // justifyContent: 'space-between',
               }}>
-              View to Cart
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={{
+                  paddingLeft: 7,
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  color: 'white',
+                  width: width - 230,
+                }}>
+                View to cart
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: 'white',
+                  width: width - 250,
+                }}>
+                {this.state.totalQuantity > 1
+                  ? this.state.totalQuantity + ' items'
+                  : this.state.totalQuantity + ' item'}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  color: 'white',
+                  width: width - 240,
+                  justifyContent: 'space-between',
+                }}>
+                $ {this.state.totalPrice}
+              </Text>
+            </TouchableOpacity>
+          ) : null}
+          {/* View to Cart BTN */}
         </View>
       </View>
     );
@@ -199,4 +280,5 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({type: 'ADD_TO_CART', payload: product}),
   };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(AllProductsScreen);

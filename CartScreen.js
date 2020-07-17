@@ -1,4 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
+console.disableYellowBox = true;
+
 import React, {Component} from 'react';
 import {
   Text,
@@ -15,9 +17,7 @@ import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 
 var {width} = Dimensions.get('window');
-// var totalPrice = 0;
-// var itemPrice = 0;
-console.disableYellowBox = true;
+
 class CartScreen extends Component {
   constructor(props) {
     super(props);
@@ -38,7 +38,6 @@ class CartScreen extends Component {
           this.setState({
             dataCart: dataCart,
           });
-          // console.log('CartScreen mount: ' + dataCart);
         }
         return this.state.dataCart;
       })
@@ -236,18 +235,13 @@ class CartScreen extends Component {
     );
   }
 }
+
 const mapStateToProps = (state) => {
   return {
     cartItems: state.cartItems,
   };
 };
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     removeItem: (product) =>
-//       dispatch({type: 'REMOVE_FROM_CART', payload: product}),
-//   };
-// };
 const mapDispatchToProps = (dispatch) => {
   return {
     addItemsToCart: (items, id, quantity) =>
@@ -267,4 +261,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartScreen);
-// export default CartScreen;
