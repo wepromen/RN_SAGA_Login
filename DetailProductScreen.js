@@ -17,15 +17,33 @@ var {width} = Dimensions.get('window');
 class DetailProductScreen extends Component {
   constructor(props) {
     super(props);
+    let qt = 1;
+    if (this.props.route.params.itemQt !== 0) {
+      qt = this.props.route.params.itemQt;
+    }
     this.state = {
       id: this.props.route.params.item.id,
       girl: this.props.route.params.item,
-      quantity: 1,
+      quantity: qt,
       price: this.props.route.params.item.price,
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    AsyncStorage.getItem('cart')
+      .then((cart) => {
+        if (cart !== null) {
+          const dataCart = JSON.parse(cart);
+          this.setState({
+            dataCart: dataCart,
+          });
+        }
+        return this.state.dataCart;
+      })
+      .catch((err) => {
+        console.log('Deatail Screen did mount: ' + err);
+      });
+  }
 
   onClickAddCart(data) {
     const itemcart = {
@@ -43,7 +61,7 @@ class DetailProductScreen extends Component {
           cart.map((item, i) => {
             console.log(item.girl.name + ' vs ' + data.name);
             if (item.girl.name === data.name) {
-              item.quantity++;
+              item.quantity = itemcart.quantity;
               isExist = true;
             }
           });
@@ -51,18 +69,16 @@ class DetailProductScreen extends Component {
             console.log('   Push New Item into Cart: ' + itemcart.girl.name);
             cart.push(itemcart);
           }
+
           return cart;
         } else {
           let cart = [];
           cart.push(itemcart);
-          cart.map((item, i) => {
-            console.log('Detail - create cart[] item: ' + item.girl.name);
-          });
           return cart;
         }
       })
       .then((rs) => {
-        // *** set into Async
+        // *** set into Async!!!!!!
         AsyncStorage.setItem('cart', JSON.stringify(rs));
         return rs;
       })

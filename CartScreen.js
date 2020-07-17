@@ -49,10 +49,14 @@ class CartScreen extends Component {
       });
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.cartItems !== prevProps.cartItems) {
       this.componentDidMount();
-      this.forceUpdate();
+    }
+    if (prevState.dataCart !== this.state.dataCart) {
+      this.setState({
+        totalPrice: 0,
+      });
     }
   }
 
@@ -86,7 +90,7 @@ class CartScreen extends Component {
       dataCar.splice(i, 1);
       AsyncStorage.removeItem('cart');
       this.setState({totalPrice: 0});
-      this.forceUpdate();
+      // this.forceUpdate();
     }
     this.setState({dataCart: dataCar});
 

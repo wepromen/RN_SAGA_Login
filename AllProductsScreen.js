@@ -131,7 +131,10 @@ class AllProductsScreen extends Component {
         }}>
         <TouchableOpacity
           onPress={() => {
-            this.props.navigation.navigate('DetailProduct', {item});
+            this.props.navigation.navigate('DetailProduct', {
+              item: item,
+              itemQt: this.updateQuantity(item.id),
+            });
           }}>
           <View
             style={{
