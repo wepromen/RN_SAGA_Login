@@ -113,26 +113,30 @@ class CartScreen extends Component {
               return (
                 <View
                   style={{
-                    width: width - 20,
-                    margin: 10,
-                    backgroundColor: 'transparent',
+                    flex: 1,
+                    margin: 5,
                     flexDirection: 'row',
-                    borderBottomWidth: 2,
+                    borderBottomWidth: 1,
                     borderColor: '#cccccc',
-                    paddingBottom: 5,
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    paddingBottom: 15,
                   }}>
                   <Image
-                    resizeMode={'contain'}
-                    style={{width: width / 3, height: width / 3.8}}
+                    resizeMode={'cover'}
+                    style={{
+                      width: width / 3,
+                      height: width / 3.5,
+                      borderRadius: 5,
+                    }}
                     source={{uri: item.girl.image}}
                   />
                   <View
                     style={{
                       flex: 1,
-                      backgroundColor: 'transparent',
                       paddingTop: 10,
                       paddingLeft: 10,
-                      justifyContent: 'space-between',
+                      // justifyContent: 'space-between',
                     }}>
                     <View>
                       <Text style={{fontWeight: 'bold', fontSize: 20}}>
@@ -142,14 +146,15 @@ class CartScreen extends Component {
                     <View
                       style={{
                         flexDirection: 'row',
-                        justifyContent: 'space-between',
+                        // justifyContent: 'space-between',
                       }}>
                       <Text
                         style={{
+                          // backgroundColor: 'gray',
                           fontWeight: 'bold',
                           color: '#33c37d',
                           fontSize: 20,
-                          width: width / 3,
+                          width: width / 4,
                         }}>
                         $ {item.price * item.quantity}
                       </Text>

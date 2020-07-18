@@ -119,22 +119,22 @@ class AllProductsScreen extends Component {
 
   render() {
     const Item = ({item}) => (
-      <View
-        style={{
-          width: width - 20,
-          margin: 10,
-          // backgroundColor: 'transparent',
-          flexDirection: 'row',
-          borderBottomWidth: 2,
-          borderColor: '#cccccc',
-          paddingBottom: 10,
+      <TouchableOpacity
+        onPress={() => {
+          this.props.navigation.navigate('DetailProduct', {
+            item: item,
+            itemQt: this.updateQuantity(item.id),
+          });
         }}>
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.navigate('DetailProduct', {
-              item: item,
-              itemQt: this.updateQuantity(item.id),
-            });
+        <View
+          style={{
+            width: width - 20,
+            margin: 10,
+            // backgroundColor: 'transparent',
+            flexDirection: 'row',
+            borderBottomWidth: 1,
+            borderColor: '#cccccc',
+            paddingBottom: 10,
           }}>
           <View
             style={{
@@ -146,20 +146,22 @@ class AllProductsScreen extends Component {
               paddingBottom: 8,
             }}>
             <Image
-              resizeMode={'contain'}
-              style={{width: width / 3, height: width / 3.8}}
+              resizeMode={'cover'}
+              style={{width: width / 3, height: width / 3.5, borderRadius: 5}}
               source={{uri: item.image}}
             />
-            <View>
+            <View
+              style={{
+                flex: 1,
+              }}>
               <View
                 style={{
                   width: width / 3,
                   // height: width / 4,
-                  padding: 10,
+                  paddingBottom: 7,
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                 }}>
-                {/* Quantity Order */}
                 <Text
                   style={{
                     fontWeight: 'bold',
@@ -203,8 +205,8 @@ class AllProductsScreen extends Component {
               </View>
             </View>
           </View>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
     );
 
     return (
