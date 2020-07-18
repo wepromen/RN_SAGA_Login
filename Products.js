@@ -57,7 +57,7 @@ class Products extends Component {
                 <Text
                   style={{
                     fontWeight: 'bold',
-                    color: '#33c37d',
+                    color: '#00b14f',
                     fontSize: 20,
                     // alignItems: 'center',
                   }}>

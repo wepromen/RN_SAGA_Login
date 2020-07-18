@@ -109,7 +109,7 @@ class DetailProductScreen extends Component {
             <Text
               style={{
                 fontWeight: 'bold',
-                color: '#33c37d',
+                color: '#00b14f',
                 fontSize: 20,
                 // alignItems: 'center',
               }}>
@@ -132,7 +132,7 @@ class DetailProductScreen extends Component {
               this.onClickAddCart(item);
             }}
             style={{
-              backgroundColor: '#33c37d',
+              backgroundColor: '#00b14f',
               width: width - 30,
               alignItems: 'center',
               padding: 15,

@@ -6,7 +6,9 @@ import {
   View,
   Image,
   Text,
+  Alert,
   StyleSheet,
+  StatusBar,
   Dimensions,
   FlatList,
   TouchableOpacity,
@@ -25,6 +27,8 @@ class AllProductsScreen extends Component {
       totalQuantity: 0,
       totalPrice: 0,
     };
+    StatusBar.setTranslucent(true);
+    StatusBar.setBackgroundColor('transparent');
   }
   componentDidMount() {
     // let arrQt = [];
@@ -73,7 +77,7 @@ class AllProductsScreen extends Component {
     let totalPrice = 0;
     console.log(' AllPro - dataCart: ' + this.state.dataCart);
 
-    if (dataCart !== null) {
+    if (dataCart !== null && typeof dataCart !== 'undefined') {
       dataCart.map((item, i) => {
         totalQuantity += item.quantity;
         itemPrice = item.price * item.quantity;
@@ -102,7 +106,10 @@ class AllProductsScreen extends Component {
 
   updateQuantity(byId) {
     let qt = 0;
-    if (this.state.dataCart !== null) {
+    if (
+      this.state.dataCart !== null &&
+      typeof this.state.dataCart === 'object'
+    ) {
       this.state.dataCart.forEach((el) => {
         if (el.id === byId.toString()) {
           qt = el.quantity;
@@ -114,6 +121,8 @@ class AllProductsScreen extends Component {
       } else {
         return 0;
       }
+    } else {
+      return 0;
     }
   }
 
@@ -130,77 +139,104 @@ class AllProductsScreen extends Component {
           style={{
             width: width - 20,
             margin: 10,
-            // backgroundColor: 'transparent',
+            // backgroundColor: 'gray',
             flexDirection: 'row',
-            borderBottomWidth: 1,
+            borderBottomWidth: 0.6,
             borderColor: '#cccccc',
-            paddingBottom: 10,
+            paddingBottom: 18,
+            paddingLeft: 18,
           }}>
           <View
             style={{
               flex: 1,
               flexDirection: 'row',
-              justifyContent: 'space-between',
+              justifyContent: 'center',
               alignItems: 'center',
-              // backgroundColor: 'trangraysparent',
-              paddingBottom: 8,
             }}>
             <Image
               resizeMode={'cover'}
-              style={{width: width / 3, height: width / 3.5, borderRadius: 5}}
+              style={{
+                width: width / 4,
+                height: width / 5,
+                borderRadius: 5,
+                // paddingLeft: 12,
+              }}
               source={{uri: item.image}}
             />
             <View
               style={{
-                flex: 1,
+                // backgroundColor: 'gray',
+                // flex: 1,
+                paddingLeft: 5,
+                paddingRight: 10,
               }}>
               <View
                 style={{
                   width: width / 3,
-                  // height: width / 4,
-                  paddingBottom: 7,
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                 }}>
-                <Text
+                <View
                   style={{
-                    fontWeight: 'bold',
-                    color: '#33c37d',
-                    fontSize: 17,
-                    width: width / 13,
+                    width: width / 3,
+                    flexDirection: 'row',
                   }}>
-                  {this.updateQuantity(item.id) !== 0
-                    ? this.updateQuantity(item.id) + 'x'
-                    : ''}
-                </Text>
+                  {this.updateQuantity(item.id) !== 0 ? (
+                    <Text
+                      style={{
+                        paddingLeft: 5,
+                        fontWeight: 'bold',
+                        color: '#00b14f',
+                        fontSize: 17,
+                        width: width / 13,
+                      }}>
+                      {this.updateQuantity(item.id) + 'x'}
+                    </Text>
+                  ) : null}
 
-                <Text
+                  <Text
+                    style={{
+                      paddingLeft: 5,
+                      fontSize: 18,
+                      width: width / 4,
+                    }}>
+                    {item.name}
+                  </Text>
+                </View>
+
+                <View
                   style={{
-                    fontSize: 20,
-                    width: width / 3.5,
+                    width: width / 2.8,
+                    justifyContent: 'center',
+                    alignItems: 'flex-end',
                   }}>
-                  {item.name}
-                </Text>
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    color: '#33c37d',
-                    fontSize: 20,
-                    // alignItems: 'center',
-                  }}>
-                  $ {item.price}
-                </Text>
+                  <Text
+                    style={{
+                      paddingLeft: 5,
+                      paddingRight: 5,
+                      fontWeight: 'bold',
+                      // color: '#00b14f',
+                      fontSize: 16,
+                    }}>
+                    $ {item.price}
+                  </Text>
+                </View>
               </View>
               <View
                 style={{
+                  // backgroundColor: 'gray',
+                  justifyContent: 'center',
                   flexDirection: 'column',
                   paddingLeft: 10,
                   paddingRight: 10,
-                  width: width / 1.7,
+                  width: width / 1.4,
                   height: width / 8,
                 }}>
-                <Text>
-                  This is content of product aaaaa aaaaaa aaaaaaa aaaa
+                <Text
+                  style={{
+                    fontSize: 13,
+                  }}>
+                  {item.description}
                 </Text>
               </View>
             </View>
@@ -209,15 +245,37 @@ class AllProductsScreen extends Component {
       </TouchableOpacity>
     );
 
-    return (
+    return this.props.isLogged ? (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <View style={{flex: 1}}>
+        {/* ============================== StatusBar Section ============================== */}
+        <View>
+          <View
+            style={{
+              width: width,
+              // justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#00b14f',
+            }}>
+            <Text
+              style={{
+                paddingTop: 24,
+                paddingBottom: 15,
+                fontSize: 25,
+                fontWeight: 'bold',
+                color: 'white',
+                justifyContent: 'center',
+              }}>
+              Girl Delivery App
+            </Text>
+          </View>
+          {/* ============================== StatusBar Section ============================== */}
+
           <FlatList
             data={DataFile}
             renderItem={({item}) => <Item item={item} />}
             keyExtractor={(item) => item.id}
           />
-          {/* View to Cart BTN */}
+          {/* ========================================= View to Cart BTN ================================================*/}
           {this.state.totalQuantity !== 0 ? (
             <TouchableOpacity
               onPress={() => {
@@ -225,14 +283,14 @@ class AllProductsScreen extends Component {
               }}
               style={{
                 flexDirection: 'row',
-                backgroundColor: '#33c37d',
+                backgroundColor: '#00b14f',
                 width: width - 20,
                 height: width - 320,
                 alignItems: 'center',
                 padding: 5,
                 borderRadius: 5,
                 margin: 10,
-                // justifyContent: 'space-between',
+                justifyContent: 'space-between',
               }}>
               <Text
                 style={{
@@ -266,8 +324,17 @@ class AllProductsScreen extends Component {
               </Text>
             </TouchableOpacity>
           ) : null}
-          {/* View to Cart BTN */}
+          {/* ========================================= View to Cart BTN ================================================*/}
         </View>
+      </View>
+    ) : (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text style={{color: 'blue'}}> Let's login before!</Text>
       </View>
     );
   }
@@ -276,6 +343,7 @@ class AllProductsScreen extends Component {
 const mapStateToProps = (state) => {
   return {
     cartItems: state.cartItems,
+    isLogged: state.isLogged,
   };
 };
 

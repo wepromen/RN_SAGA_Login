@@ -30,9 +30,18 @@ class LoginScreen extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.isLogged.isPressLogin !== prevProps.isPressLogin) {
-      console.log('===isPressLogin ' + this.props.isLogged.isPressLogin);
+    console.log(prevProps.isLogged);
+    console.log(' Vs ');
+    console.log(this.props.isLogged);
+    if (
+      prevProps.isLogged !== this.props.isLogged &&
+      this.props.isLogged === true
+    ) {
       this.componentDidMount();
+      // console.log('==== Move to TabNav');
+      // this.props.navigation.navigate('TabNav', {
+      //   isLogged: this.props.isLogged,
+      // });
     }
   }
 
@@ -59,23 +68,11 @@ class LoginScreen extends React.Component {
           }}
         />
 
-        <Button
+        {/* <Button
           title="Go to TabNav screen"
           onPress={() => {
             if (this.props.isLogged) {
               this.props.navigation.navigate('TabNav', {
-                isLogged: this.props.isLogged,
-              });
-            } else {
-              Alert.alert('Let`s to login before!');
-            }
-          }}
-        />
-        {/* <Button
-          title="Go to Cart"
-          onPress={() => {
-            if (this.props.isLogged) {
-              this.props.navigation.navigate('Cart', {
                 isLogged: this.props.isLogged,
               });
             } else {
@@ -102,7 +99,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   btn: {
-    color: '#33c37d',
+    color: '#00b14f',
     paddingHorizontal: 8,
     fontWeight: 'bold',
     fontSize: 50,

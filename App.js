@@ -31,13 +31,17 @@ let TabStack = createBottomTabNavigator();
 
 function AllScreenStack() {
   return (
-    <RootStack.Navigator>
+    <RootStack.Navigator screenOptions={{headerShown: true}}>
       <RootStack.Screen name="Login" component={LoginScreen} />
-      <RootStack.Screen name="TabNav" component={TabNavigator} />
+      <RootStack.Screen
+        name="TabNav"
+        component={TabNavigator}
+        options={() => ({title: '', headerShown: false})}
+      />
       <RootStack.Screen
         name="AllProducts"
         component={AllProductsScreen}
-        options={() => ({title: 'AllProducts Screen'})}
+        options={() => ({headerShown: true})}
       />
       <RootStack.Screen name="DetailProduct" component={DetailProductScreen} />
       <RootStack.Screen
@@ -51,8 +55,19 @@ function AllScreenStack() {
 
 function TabNavigator() {
   return (
-    <TabStack.Navigator>
-      <TabStack.Screen name="AllProducts" component={AllProductsScreen} />
+    <TabStack.Navigator
+      initialRouteName="AllProducts"
+      tabBarOptions={{
+        activeTintColor: 'blue',
+      }}>
+      <TabStack.Screen
+        name="AllProducts"
+        component={AllProductsScreen}
+        // options={{
+        //   headerTitle: 'All Products',
+        //   tabBarLabel: 'All Products',
+        // }}
+      />
       <TabStack.Screen name="Cart" component={CartScreen} />
       <TabStack.Screen name="Setting" component={LoginScreen} />
     </TabStack.Navigator>
@@ -64,7 +79,8 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <AllScreenStack navigation={this.navigation} route={this.route} />
+        <AllScreenStack />
+        {/* navigation={this.navigation} route={this.route} */}
       </NavigationContainer>
     </Provider>
   );

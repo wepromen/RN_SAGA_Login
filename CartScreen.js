@@ -105,8 +105,26 @@ class CartScreen extends Component {
   }
 
   render() {
-    return (
+    return this.props.isLogged ? (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <View
+          style={{
+            width: width,
+            alignItems: 'center',
+            backgroundColor: '#00b14f',
+          }}>
+          <Text
+            style={{
+              paddingTop: 10,
+              paddingBottom: 7,
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: 'white',
+              justifyContent: 'center',
+            }}>
+            Your Cart
+          </Text>
+        </View>
         <View style={{flex: 1}}>
           <ScrollView>
             {this.state.dataCart.map((item, i) => {
@@ -118,6 +136,7 @@ class CartScreen extends Component {
                     flexDirection: 'row',
                     borderBottomWidth: 1,
                     borderColor: '#cccccc',
+                    paddingTop: 10,
                     paddingLeft: 10,
                     paddingRight: 10,
                     paddingBottom: 15,
@@ -125,75 +144,80 @@ class CartScreen extends Component {
                   <Image
                     resizeMode={'cover'}
                     style={{
-                      width: width / 3,
-                      height: width / 3.5,
+                      width: width / 4,
+                      height: width / 5,
                       borderRadius: 5,
+                      padding: 15,
                     }}
                     source={{uri: item.girl.image}}
                   />
                   <View
                     style={{
                       flex: 1,
-                      paddingTop: 10,
-                      paddingLeft: 10,
+                      paddingHorizontal: 15,
                       // justifyContent: 'space-between',
                     }}>
                     <View>
-                      <Text style={{fontWeight: 'bold', fontSize: 20}}>
+                      <Text style={{fontWeight: 'bold', fontSize: 18}}>
                         {item.girl.name}
                       </Text>
                     </View>
                     <View
                       style={{
                         flexDirection: 'row',
-                        // justifyContent: 'space-between',
+                        justifyContent: 'space-between',
                       }}>
                       <Text
                         style={{
-                          // backgroundColor: 'gray',
-                          fontWeight: 'bold',
-                          color: '#33c37d',
-                          fontSize: 20,
+                          // fontWeight: 'bold',
+                          // color: '#29b8db',
+                          fontSize: 15,
                           width: width / 4,
                         }}>
                         $ {item.price * item.quantity}
                       </Text>
-                      <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <TouchableOpacity
-                          onPress={() => this.onChangeQual(i, false)}>
-                          <Text
-                            style={{
-                              color: '#33c37d',
-                              paddingHorizontal: 8,
-                              fontWeight: 'bold',
-                              fontSize: 50,
-                            }}>
-                            -
-                          </Text>
-                        </TouchableOpacity>
-                        <Text
-                          style={{
-                            paddingHorizontal: 8,
-                            fontWeight: 'bold',
-                            fontSize: 18,
-                          }}>
-                          {item.quantity}
-                        </Text>
-                        <TouchableOpacity
-                          onPress={() => this.onChangeQual(i, true)}>
-                          <Text
-                            style={{
-                              color: '#33c37d',
-                              paddingHorizontal: 8,
-                              fontWeight: 'bold',
-                              fontSize: 50,
-                            }}>
-                            +
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
                     </View>
+                  </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      justifyContent: 'space-between',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      // backgroundColor: 'gray',
+                    }}>
+                    <TouchableOpacity
+                      onPress={() => this.onChangeQual(i, false)}>
+                      <Text
+                        style={{
+                          color: '#00b14f',
+                          // paddingHorizontal: 8,
+                          fontWeight: 'bold',
+                          fontSize: 30,
+                        }}>
+                        -
+                      </Text>
+                    </TouchableOpacity>
+                    <Text
+                      style={{
+                        paddingHorizontal: 8,
+                        fontWeight: 'bold',
+                        fontSize: 18,
+                      }}>
+                      {item.quantity}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => this.onChangeQual(i, true)}>
+                      <Text
+                        style={{
+                          color: '#00b14f',
+                          // paddingHorizontal: 8,
+                          fontWeight: 'bold',
+                          fontSize: 30,
+                        }}>
+                        +
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               );
@@ -202,16 +226,26 @@ class CartScreen extends Component {
           <View>
             <View
               style={{
-                width: width - 40,
-                padding: 15,
+                flexDirection: 'row',
+                width: width,
+                paddingHorizontal: 15,
+                alignItems: 'flex-end',
+                justifyContent: 'space-between',
               }}>
               <Text
                 style={{
-                  fontSize: 24,
-                  fontWeight: 'bold',
-                  color: 'red',
+                  fontSize: 18,
+                  justifyContent: 'space-between',
                 }}>
-                Total: $ {this.state.totalPrice}
+                Total:
+              </Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  justifyContent: 'space-between',
+                }}>
+                $ {this.state.totalPrice}
               </Text>
             </View>
 
@@ -220,7 +254,7 @@ class CartScreen extends Component {
                 // Alert.alert('Total: ' + totalPrice);
               }}
               style={{
-                backgroundColor: '#33c37d',
+                backgroundColor: '#00b14f',
                 width: width - 20,
                 height: width - 320,
                 alignItems: 'center',
@@ -241,12 +275,22 @@ class CartScreen extends Component {
           </View>
         </View>
       </View>
+    ) : (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text style={{color: 'blue'}}> Let's login before!</Text>
+      </View>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
+    isLogged: state.isLogged,
     cartItems: state.cartItems,
   };
 };

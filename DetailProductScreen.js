@@ -144,7 +144,7 @@ class DetailProductScreen extends Component {
             <Text
               style={{
                 fontWeight: 'bold',
-                color: '#33c37d',
+                color: '#00b14f',
                 fontSize: 20,
                 // alignItems: 'center',
               }}>
@@ -158,7 +158,7 @@ class DetailProductScreen extends Component {
               paddingLeft: 20,
               paddingRight: 20,
               width: width,
-              height: width / 3.5,
+              height: width / 2.2,
             }}>
             <Text>This is content of product aaaaa aaaaaa aaaaaaa aaaa</Text>
           </View>
@@ -166,6 +166,7 @@ class DetailProductScreen extends Component {
           <View
             style={{
               // backgroundColor: 'gray',
+              height: width / 4.3,
               justifyContent: 'center',
               flexDirection: 'row',
               alignItems: 'center',
@@ -175,7 +176,7 @@ class DetailProductScreen extends Component {
               <Text
                 style={{
                   alignItems: 'center',
-                  color: '#33c37d',
+                  color: '#00b14f',
                   paddingHorizontal: 8,
                   fontWeight: 'bold',
                   fontSize: 50,
@@ -196,7 +197,7 @@ class DetailProductScreen extends Component {
               <Text
                 style={{
                   alignItems: 'center',
-                  color: '#33c37d',
+                  color: '#00b14f',
                   paddingHorizontal: 8,
                   fontWeight: 'bold',
                   fontSize: 50,
@@ -213,7 +214,7 @@ class DetailProductScreen extends Component {
             }}
             style={{
               // flexDirection: 'row',
-              backgroundColor: '#33c37d',
+              backgroundColor: '#00b14f',
               width: width - 20,
               height: width - 320,
               alignItems: 'center',
