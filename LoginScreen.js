@@ -1,7 +1,15 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import {connect} from 'react-redux';
 import * as React from 'react';
-import {View, Text, Button, StyleSheet, Alert, StatusBar} from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  Alert,
+  StatusBar,
+  TouchableOpacity,
+} from 'react-native';
 
 class LoginScreen extends React.Component {
   constructor(props) {
@@ -51,32 +59,18 @@ class LoginScreen extends React.Component {
             ? 'Welcome to Home!!!!'
             : 'Let`s to login before!'}
         </Text>
-        <Button
-          title="LOGIN"
+        <TouchableOpacity
           onPress={() => {
             this.props.dispatch({type: 'PRESSBTNLOGIN'});
-          }}
-        />
-        <Button
-          title="LOGOUT"
+          }}>
+          <Text style={styles.btn}>LOGIN</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => {
-            console.log('press logout');
             this.props.dispatch({type: 'PRESSBTNLOGOUT'});
-          }}
-        />
-
-        {/* <Button
-          title="Go to TabNav screen"
-          onPress={() => {
-            if (this.props.isLogged) {
-              this.props.navigation.navigate('TabNav', {
-                isLogged: this.props.isLogged,
-              });
-            } else {
-              Alert.alert('Let`s to login before!');
-            }
-          }}
-        /> */}
+          }}>
+          <Text style={styles.btn}>LOGOUT</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -87,7 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ecf0f1',
-    padding: 8,
+    padding: 15,
   },
   paragraph: {
     margin: 24,
@@ -96,21 +90,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   btn: {
-    color: '#00b14f',
-    paddingHorizontal: 8,
+    borderRadius: 5,
+    margin: 3,
+    backgroundColor: '#00b14f',
+    color: 'white',
+    padding: 5,
     fontWeight: 'bold',
-    fontSize: 50,
+    fontSize: 15,
   },
 });
-
-/* Connect the LoginScreen to Redux| It's will store isLogged of Redux Store to isLogged
-  and then its can use this where is LoginScreen
-*/
-// let LoginContainer = connect((state) => ({isLogged: state.isLogged}))(
-//   LoginScreen,
-// );
-
-// export default LoginContainer;
 
 const mapStateToProps = (state) => {
   return {

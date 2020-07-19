@@ -18,7 +18,7 @@ import Feather from 'react-native-vector-icons/Feather';
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
-// A very simple store (***authReducer will handle to isLogged State)
+// A very simple store
 let store = createStore(
   combineReducers({
     isLogged: AuthReducer,
@@ -31,7 +31,7 @@ let store = createStore(
 let RootStack = createStackNavigator();
 let TabStack = createBottomTabNavigator();
 
-function Stack() {
+function ProfileStack() {
   return (
     <RootStack.Navigator screenOptions={{headerShown: true}}>
       <RootStack.Screen
@@ -39,7 +39,7 @@ function Stack() {
         component={LoginScreen}
         options={() => ({title: 'Login', headerShown: false})}
       />
-      <RootStack.Screen
+      {/* <RootStack.Screen
         name="DetailProduct"
         component={DetailProductScreen}
         options={() => ({title: 'Detail Product Screen', headerShown: false})}
@@ -48,6 +48,29 @@ function Stack() {
         name="Cart"
         component={CartScreen}
         options={() => ({title: 'Your Cart', headerShown: true})}
+      /> */}
+    </RootStack.Navigator>
+  );
+}
+function HomeStack() {
+  return (
+    <RootStack.Navigator screenOptions={{headerShown: true}}>
+      <RootStack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={() => ({headerShown: false})}
+      />
+
+      <RootStack.Screen
+        name="Cart"
+        component={CartScreen}
+        options={() => ({title: 'Your Cart', headerShown: true})}
+      />
+
+      <RootStack.Screen
+        name="DetailProduct"
+        component={DetailProductScreen}
+        options={() => ({title: 'Detail Product Screen', headerShown: false})}
       />
     </RootStack.Navigator>
   );
@@ -67,7 +90,7 @@ function TabNavigator() {
       }}>
       <TabStack.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeStack}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: () => (
@@ -77,7 +100,7 @@ function TabNavigator() {
       />
       <TabStack.Screen
         name="Setting"
-        component={Stack}
+        component={ProfileStack}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: () => (
