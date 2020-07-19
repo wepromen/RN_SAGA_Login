@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 var {width} = Dimensions.get('window');
 
-class AllProductsScreen extends Component {
+class HomeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,6 +29,7 @@ class AllProductsScreen extends Component {
     };
     StatusBar.setTranslucent(true);
     StatusBar.setBackgroundColor('transparent');
+    StatusBar.setBarStyle('dark-content');
   }
   componentDidMount() {
     // let arrQt = [];
@@ -354,4 +355,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllProductsScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

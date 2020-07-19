@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import {connect} from 'react-redux';
 import * as React from 'react';
-import {View, Text, Button, StyleSheet, Alert} from 'react-native';
+import {View, Text, Button, StyleSheet, Alert, StatusBar} from 'react-native';
 
 class LoginScreen extends React.Component {
   constructor(props) {
@@ -17,10 +17,8 @@ class LoginScreen extends React.Component {
         );
         if (typeof token !== 'undefined' && token != null) {
           this.props.dispatch({type: 'LOGIN'});
-          console.log('===LoginScreen move to TabNav ');
-          this.props.navigation.navigate('TabNav', {
-            isLogged: this.props.isLogged,
-          });
+          console.log('===LoginScreen success move to screen');
+          this.props.navigation.jumpTo('Home');
         }
       })
       .catch((err) => {
@@ -37,11 +35,10 @@ class LoginScreen extends React.Component {
       prevProps.isLogged !== this.props.isLogged &&
       this.props.isLogged === true
     ) {
-      this.componentDidMount();
-      // console.log('==== Move to TabNav');
-      // this.props.navigation.navigate('TabNav', {
-      //   isLogged: this.props.isLogged,
-      // });
+      console.log('==== Move to Home');
+      this.props.navigation.navigate('Home', {
+        isLogged: this.props.isLogged,
+      });
     }
   }
 
@@ -51,7 +48,7 @@ class LoginScreen extends React.Component {
       <View style={styles.container}>
         <Text style={styles.paragraph}>
           {this.props.isLogged
-            ? 'Welcome to AllProducts!!!!'
+            ? 'Welcome to Home!!!!'
             : 'Let`s to login before!'}
         </Text>
         <Button

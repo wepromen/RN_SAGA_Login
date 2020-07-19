@@ -3,6 +3,7 @@ console.disableYellowBox = true;
 
 import React, {Component} from 'react';
 import {
+  StatusBar,
   Text,
   View,
   TextInput,
@@ -15,6 +16,7 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 var {width} = Dimensions.get('window');
 
@@ -107,7 +109,7 @@ class CartScreen extends Component {
   render() {
     return this.props.isLogged ? (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <View
+        {/* <View
           style={{
             width: width,
             alignItems: 'center',
@@ -124,7 +126,7 @@ class CartScreen extends Component {
             }}>
             Your Cart
           </Text>
-        </View>
+        </View> */}
         <View style={{flex: 1}}>
           <ScrollView>
             {this.state.dataCart.map((item, i) => {
@@ -170,7 +172,6 @@ class CartScreen extends Component {
                       <Text
                         style={{
                           // fontWeight: 'bold',
-                          // color: '#29b8db',
                           fontSize: 15,
                           width: width / 4,
                         }}>
@@ -188,15 +189,11 @@ class CartScreen extends Component {
                     }}>
                     <TouchableOpacity
                       onPress={() => this.onChangeQual(i, false)}>
-                      <Text
-                        style={{
-                          color: '#00b14f',
-                          // paddingHorizontal: 8,
-                          fontWeight: 'bold',
-                          fontSize: 30,
-                        }}>
-                        -
-                      </Text>
+                      <AntDesign
+                        name="minussquareo"
+                        size={35}
+                        color="#00b14f"
+                      />
                     </TouchableOpacity>
                     <Text
                       style={{
@@ -208,15 +205,7 @@ class CartScreen extends Component {
                     </Text>
                     <TouchableOpacity
                       onPress={() => this.onChangeQual(i, true)}>
-                      <Text
-                        style={{
-                          color: '#00b14f',
-                          // paddingHorizontal: 8,
-                          fontWeight: 'bold',
-                          fontSize: 30,
-                        }}>
-                        +
-                      </Text>
+                      <AntDesign name="plussquareo" size={35} color="#00b14f" />
                     </TouchableOpacity>
                   </View>
                 </View>

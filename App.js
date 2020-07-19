@@ -8,10 +8,12 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import AuthReducer from './AuthReducer';
 import CartReducer from './CartReducer';
 import LoginScreen from './LoginScreen';
-import AllProductsScreen from './AllProductsScreen';
+import HomeScreen from './HomeScreen';
 import CartScreen from './CartScreen';
 import DetailProductScreen from './DetailProductScreen';
 import rootSaga from './apiSaga';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -29,25 +31,23 @@ let store = createStore(
 let RootStack = createStackNavigator();
 let TabStack = createBottomTabNavigator();
 
-function AllScreenStack() {
+function Stack() {
   return (
     <RootStack.Navigator screenOptions={{headerShown: true}}>
-      <RootStack.Screen name="Login" component={LoginScreen} />
       <RootStack.Screen
-        name="TabNav"
-        component={TabNavigator}
-        options={() => ({title: '', headerShown: false})}
+        name="Login"
+        component={LoginScreen}
+        options={() => ({title: 'Login', headerShown: false})}
       />
       <RootStack.Screen
-        name="AllProducts"
-        component={AllProductsScreen}
-        options={() => ({headerShown: true})}
+        name="DetailProduct"
+        component={DetailProductScreen}
+        options={() => ({title: 'Detail Product Screen', headerShown: false})}
       />
-      <RootStack.Screen name="DetailProduct" component={DetailProductScreen} />
       <RootStack.Screen
         name="Cart"
         component={CartScreen}
-        options={() => ({title: 'Cart Screen'})}
+        options={() => ({title: 'Your Cart', headerShown: true})}
       />
     </RootStack.Navigator>
   );
@@ -56,20 +56,35 @@ function AllScreenStack() {
 function TabNavigator() {
   return (
     <TabStack.Navigator
-      initialRouteName="AllProducts"
+      initialRouteName="Setting"
       tabBarOptions={{
-        activeTintColor: 'blue',
+        labelStyle: {
+          fontSize: 12,
+          fontWeight: 'bold',
+        },
+        activeTintColor: '#00b14f',
+        inactiveTintColor: 'gray',
       }}>
       <TabStack.Screen
-        name="AllProducts"
-        component={AllProductsScreen}
-        // options={{
-        //   headerTitle: 'All Products',
-        //   tabBarLabel: 'All Products',
-        // }}
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: () => (
+            <FontAwesome name="compass" size={30} color="#00b14f" />
+          ),
+        }}
       />
-      <TabStack.Screen name="Cart" component={CartScreen} />
-      <TabStack.Screen name="Setting" component={LoginScreen} />
+      <TabStack.Screen
+        name="Setting"
+        component={Stack}
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: () => (
+            <FontAwesome name="user" size={30} color="#00b14f" />
+          ),
+        }}
+      />
     </TabStack.Navigator>
   );
 }
@@ -79,8 +94,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <AllScreenStack />
-        {/* navigation={this.navigation} route={this.route} */}
+        <TabNavigator />
       </NavigationContainer>
     </Provider>
   );

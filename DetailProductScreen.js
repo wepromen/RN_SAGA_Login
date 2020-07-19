@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 var {width} = Dimensions.get('window');
 
@@ -86,7 +87,7 @@ class DetailProductScreen extends Component {
         console.log('Detail items: ' + rs);
         // *** Set into props !!!!
         this.props.addItemsToCart(rs, this.state.girl.id, this.state.quantity);
-        this.props.navigation.navigate('TabNav');
+        this.props.navigation.navigate('Home');
       })
       .catch((err) => {
         console.log('DetailS ClickAdd err: ' + err);
@@ -138,15 +139,10 @@ class DetailProductScreen extends Component {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-            <Text style={{fontWeight: 'bold', fontSize: 20, width: width / 3}}>
-              {item.name}
-            </Text>
+            <Text style={{fontSize: 20, width: width / 3}}>{item.name}</Text>
             <Text
               style={{
-                fontWeight: 'bold',
-                color: '#00b14f',
-                fontSize: 20,
-                // alignItems: 'center',
+                fontSize: 18,
               }}>
               $ {this.state.price * this.state.quantity}
             </Text>
@@ -160,7 +156,12 @@ class DetailProductScreen extends Component {
               width: width,
               height: width / 2.2,
             }}>
-            <Text>This is content of product aaaaa aaaaaa aaaaaaa aaaa</Text>
+            <Text
+              style={{
+                fontSize: 13,
+              }}>
+              {item.description}
+            </Text>
           </View>
           {/* ================================================Change to quantity section */}
           <View
@@ -173,16 +174,7 @@ class DetailProductScreen extends Component {
               paddingBottom: 4,
             }}>
             <TouchableOpacity onPress={() => this.onChangeQual(false)}>
-              <Text
-                style={{
-                  alignItems: 'center',
-                  color: '#00b14f',
-                  paddingHorizontal: 8,
-                  fontWeight: 'bold',
-                  fontSize: 50,
-                }}>
-                -
-              </Text>
+              <AntDesign name="minussquareo" size={40} color="#00b14f" />
             </TouchableOpacity>
             <Text
               style={{
@@ -194,16 +186,7 @@ class DetailProductScreen extends Component {
               {this.state.quantity}
             </Text>
             <TouchableOpacity onPress={() => this.onChangeQual(true)}>
-              <Text
-                style={{
-                  alignItems: 'center',
-                  color: '#00b14f',
-                  paddingHorizontal: 8,
-                  fontWeight: 'bold',
-                  fontSize: 50,
-                }}>
-                +
-              </Text>
+              <AntDesign name="plussquareo" size={40} color="#00b14f" />
             </TouchableOpacity>
           </View>
 
