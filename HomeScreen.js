@@ -315,11 +315,12 @@ class HomeScreen extends Component {
               </Text>
               <Text
                 style={{
+                  paddingRight: 5,
                   fontSize: 18,
                   fontWeight: 'bold',
                   color: 'white',
-                  width: width - 240,
-                  justifyContent: 'space-between',
+                  // width: width - 200,
+                  alignItems: 'flex-end',
                 }}>
                 $ {this.state.totalPrice}
               </Text>
